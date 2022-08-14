@@ -1,0 +1,8 @@
+/home/sawcunha/Documentos/Projetos/InsideSoftwares/InsideSoftwaresCommons/src/main/java/br/com/insidesoftwares/commons/dto/response/PaginatedDTO.java
+/home/sawcunha/Documentos/Projetos/InsideSoftwares/InsideSoftwaresCommons/src/main/java/br/com/insidesoftwares/commons/sort/PropertiesOrder.java
+/home/sawcunha/Documentos/Projetos/InsideSoftwares/InsideSoftwaresCommons/src/main/java/br/com/insidesoftwares/commons/specification/LocaleUtils.java
+/home/sawcunha/Documentos/Projetos/InsideSoftwares/InsideSoftwaresCommons/src/main/java/br/com/insidesoftwares/commons/dto/request/PaginationFilter.java
+/home/sawcunha/Documentos/Projetos/InsideSoftwares/InsideSoftwaresCommons/src/main/java/br/com/insidesoftwares/commons/utils/PaginationUtils.java
+/home/sawcunha/Documentos/Projetos/InsideSoftwares/InsideSoftwaresCommons/src/main/java/br/com/insidesoftwares/commons/specification/ExceptionCode.java
+/home/sawcunha/Documentos/Projetos/InsideSoftwares/InsideSoftwaresCommons/src/main/java/br/com/insidesoftwares/commons/dto/response/InsideSoftwaresResponse.java
+/home/sawcunha/Documentos/Projetos/InsideSoftwares/InsideSoftwaresCommons/src/main/java/br/com/insidesoftwares/commons/utils/JwtTokenUtil.java

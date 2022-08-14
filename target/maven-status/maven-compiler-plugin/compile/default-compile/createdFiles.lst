@@ -1,0 +1,11 @@
+br/com/insidesoftwares/commons/dto/response/PaginatedDTO$PaginatedDTOBuilder.class
+br/com/insidesoftwares/commons/specification/ExceptionCode.class
+br/com/insidesoftwares/commons/dto/request/PaginationFilter.class
+br/com/insidesoftwares/commons/specification/LocaleUtils.class
+br/com/insidesoftwares/commons/dto/response/PaginatedDTO.class
+br/com/insidesoftwares/commons/sort/PropertiesOrder.class
+br/com/insidesoftwares/commons/utils/PaginationUtils.class
+br/com/insidesoftwares/commons/utils/JwtTokenUtil.class
+br/com/insidesoftwares/commons/dto/response/InsideSoftwaresResponse.class
+br/com/insidesoftwares/commons/dto/response/InsideSoftwaresResponse$InsideSoftwaresResponseBuilder.class
+br/com/insidesoftwares/commons/dto/request/PaginationFilter$PaginationFilterBuilder.class
