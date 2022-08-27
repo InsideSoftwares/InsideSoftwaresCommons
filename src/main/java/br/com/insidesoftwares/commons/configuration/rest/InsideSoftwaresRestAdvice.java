@@ -51,8 +51,7 @@ public class InsideSoftwaresRestAdvice implements ResponseBodyAdvice<InsideSoftw
     }
 
     private Long getStartTime(ServerHttpResponse response){
-        if(response.getHeaders() != null && response.getHeaders().containsKey(START_TIME_HEADER) && response.getHeaders().get(START_TIME_HEADER) != null){
-
+        if(response.getHeaders().containsKey(START_TIME_HEADER) && response.getHeaders().get(START_TIME_HEADER) != null){
             return Long.parseLong(response.getHeaders().get(START_TIME_HEADER).toString().replaceAll("[^\\d]*",""));
         }
         return LocalTime.now().getLong(ChronoField.MILLI_OF_DAY);

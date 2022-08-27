@@ -8,14 +8,16 @@ Projeto contem todas as classes, métodos e recursos comuns a todos os projetos 
 ## Framework Utilizado
 
 * [Spring Boot]('https://spring.io/projects/spring-boot')
-  * Versão: 2.7.2
+  * Versão: 2.7.3
 * [Java]('https://www.java.com/pt-BR/')
   * Versão: 17 ou superior
 
 ## Usado pelos projetos
 
-Esse projeto é usado pelas seguintes empresas:
+Esse projeto é usado pelas seguintes projetos:
 
+- [InsideSoftwaresSecurityCommons]('https://github.com/InsideSoftwares/InsideSoftwaresSecurityCommons') 
+- [InsideSoftwaresExceptionCommons]('https://github.com/InsideSoftwares/InsideSoftwaresExceptionCommons') 
 - [InsideSoftwaresAuthenticator]('https://github.com/InsideSoftwares/InsideSoftwaresAuthenticator') 
 - [InsideSoftwaresAccessControl]('https://github.com/InsideSoftwares/access_control_back')
 

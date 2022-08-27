@@ -1,20 +1,21 @@
 package br.com.insidesoftwares.commons.dto.request;
 
+import br.com.insidesoftwares.commons.dto.BaseDTO;
 import br.com.insidesoftwares.commons.sort.PropertiesOrder;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.Sort;
 
 import java.io.Serial;
-import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaginationFilter<T> implements Serializable {
+public class PaginationFilter<T> extends BaseDTO {
 
     @Serial
     private static final long serialVersionUID = 1L;

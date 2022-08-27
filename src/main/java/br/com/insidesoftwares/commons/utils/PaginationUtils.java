@@ -2,13 +2,11 @@ package br.com.insidesoftwares.commons.utils;
 
 import br.com.insidesoftwares.commons.dto.request.PaginationFilter;
 import br.com.insidesoftwares.commons.dto.response.PaginatedDTO;
-import br.com.insidesoftwares.commons.sort.PropertiesOrder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Objects;
 
 public class PaginationUtils {
 
@@ -27,21 +25,28 @@ public class PaginationUtils {
     public static Pageable createPageable(
             final PaginationFilter paginationFilter
     ) {
-        return PageRequest.of(
-                calculatePage(paginationFilter.getPage()),
-                paginationFilter.getSizePerPage(),
-                createSort(paginationFilter.getDirection(), paginationFilter.getOrder())
-        );
+        Sort sort = createSort(paginationFilter.getDirection(), paginationFilter.getOrder());
+        return Objects.nonNull(sort) ?
+                PageRequest.of(
+                    calculatePage(paginationFilter.getPage()),
+                    paginationFilter.getSizePerPage(), sort
+                ) :
+                PageRequest.of(
+                        calculatePage(paginationFilter.getPage()),
+                        paginationFilter.getSizePerPage()
+                );
     }
 
-    public static Sort createSort(
+    private static Sort createSort(
             final Sort.Direction direction,
             final String order
     ){
-        return Sort.by(
-                direction,
-                order
-        );
+
+        return Objects.nonNull(order) ?
+                Sort.by(
+                    direction,
+                    order
+                ) : null;
     }
 
 }

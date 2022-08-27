@@ -1,16 +1,18 @@
 package br.com.insidesoftwares.commons.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import br.com.insidesoftwares.commons.dto.BaseDTO;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class InsideSoftwaresResponse<T> implements Serializable {
+public class InsideSoftwaresResponse<T> extends BaseDTO {
 
     @Serial
     private static final long serialVersionUID = 1L;

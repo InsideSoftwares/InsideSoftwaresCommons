@@ -47,9 +47,9 @@ public class DateUtils {
     }
 
     public static boolean isDateValid(Integer day, Integer month){
-        if(day.equals(MONTH_31_DAY) && MONTHS_31_DAYS.contains(month)) return true;
-        if(day.equals(MONTH_30_DAY) && MONTHS_31_DAYS.contains(month)) return true;
-        if(day.equals(MONTH_30_DAY) && MONTHS_30_DAYS.contains(month)) return true;
+        if(day <= (MONTH_31_DAY) && MONTHS_31_DAYS.contains(month)) return true;
+        if(day <= (MONTH_30_DAY) && MONTHS_31_DAYS.contains(month)) return true;
+        if(day <= (MONTH_30_DAY) && MONTHS_30_DAYS.contains(month)) return true;
         return month.equals(FEBRUARY) && day <= FEBRUARY_DAY;
     }
 
