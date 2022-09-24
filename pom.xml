@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.3</version>
+        <version>2.7.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -28,7 +28,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2021.0.3</version>
+                <version>2021.0.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -70,7 +70,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.13.3</version>
         </dependency>
         <dependency>
             <groupId>io.fusionauth</groupId>
@@ -85,7 +84,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>2.11.0</version>
         </dependency>
 
         <dependency>
@@ -96,7 +95,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.3.22</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -107,13 +105,13 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.7.0</version>
+            <version>4.8.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-inline</artifactId>
-            <version>4.7.0</version>
+            <version>4.8.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -225,6 +223,7 @@
                         <exclude>br/com/insidesoftwares/commons/entity/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/specification/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/sort/**/*</exclude>
+                        <exclude>br/com/insidesoftwares/commons/listener/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
