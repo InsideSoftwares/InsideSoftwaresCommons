@@ -35,14 +35,12 @@ public class LoggingInitialFilter implements Filter {
 				Request URI: {}
 				Content-Type: {}
 				Headers: {}
-				Body: {}
 				--------------------------------------------------------------""",
 				DateUtils.returnDateCurrent(),
 				req.getMethod(),
 				req.getRequestURI(),
 				req.getContentType(),
-				new ServletServerHttpRequest(req).getHeaders(),
-				""
+				new ServletServerHttpRequest(req).getHeaders()
 		);
 
 		chain.doFilter(req, response);

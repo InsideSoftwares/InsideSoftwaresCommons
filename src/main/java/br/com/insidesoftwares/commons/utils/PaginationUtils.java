@@ -2,12 +2,15 @@ package br.com.insidesoftwares.commons.utils;
 
 import br.com.insidesoftwares.commons.dto.request.PaginationFilter;
 import br.com.insidesoftwares.commons.dto.response.PaginatedDTO;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.Objects;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PaginationUtils {
 
     public static PaginatedDTO createPaginated(final int totalPages, final long totalElements, final int sizePerPage){

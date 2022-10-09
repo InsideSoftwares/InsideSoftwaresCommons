@@ -5,7 +5,10 @@ import br.com.insidesoftwares.commons.specification.PermissionRole;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
@@ -30,7 +33,7 @@ public enum Permission implements PermissionRole {
     AUTHENTICATION_TOKEN_REFRESH("AUTHENTICATION_TOKEN_REFRESH", "Refresh authentication token", SystemCode.IAC, ProfileType.getAllProfile()),
     CHANGE_PASSWORD_REQUIRED("CHANGE_PASSWORD_REQUIRED", "Permission to change password required", SystemCode.IAC, ProfileType.getAllProfile()),
     CHANGE_PASSWORD("CHANGE_PASSWORD", "Permission to change password", SystemCode.IAC, ProfileType.getAllProfile()),
-
+    LOGOUT_USER("LOGOUT_USER", "Logout user", SystemCode.IAC, ProfileType.getAllProfile()),
     ;
 
     private final String role;
@@ -41,5 +44,12 @@ public enum Permission implements PermissionRole {
     @Override
     public String role() {
         return getRole();
+    }
+
+    public static List<Permission> permissionsBySystem(final SystemCode systemCode){
+        return Arrays.stream(Permission.values())
+                .filter(permission -> Objects.nonNull(permission.getSystemCode()))
+                .filter(permission -> permission.getSystemCode().equals(systemCode))
+                .collect(Collectors.toList());
     }
 }

@@ -1,11 +1,16 @@
 package br.com.insidesoftwares.commons.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DateUtils {
 
 	private static final int MONTH_31_DAY = 31;
@@ -57,7 +62,12 @@ public class DateUtils {
 		return LocalDateTime.now().format(FORMATER_TIME);
 	}
 
-	public static String returnDate(final LocalDate date){
-		return date.format(FORMATER);
-	}
+    public static String returnDate(final LocalDate date){
+        if(Objects.isNull(date)) return null;
+        return date.format(FORMATER);
+    }
+    public static String returnDate(final LocalDateTime date){
+        if(Objects.isNull(date)) return null;
+        return date.format(FORMATER_TIME);
+    }
 }
