@@ -8,7 +8,7 @@ Projeto contem todas as classes, métodos e recursos comuns a todos os projetos 
 ## Framework Utilizado
 
 * [Spring Boot]('https://spring.io/projects/spring-boot')
-  * Versão: 2.7.3
+  * Versão: 2.7.4
 * [Java]('https://www.java.com/pt-BR/')
   * Versão: 17 ou superior
 
