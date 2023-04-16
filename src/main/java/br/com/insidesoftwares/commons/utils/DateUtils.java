@@ -3,6 +3,7 @@ package br.com.insidesoftwares.commons.utils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.time.DateTimeException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,6 +57,15 @@ public class DateUtils {
         if(day <= (MONTH_30_DAY) && MONTHS_31_DAYS.contains(month)) return true;
         if(day <= (MONTH_30_DAY) && MONTHS_30_DAYS.contains(month)) return true;
         return month.equals(FEBRUARY) && day <= FEBRUARY_DAY;
+    }
+
+    public static boolean isDateValid(Integer day, Integer month, Integer year){
+        try {
+            LocalDate.of(year, month, day);
+        }catch (DateTimeException dateTimeException){
+            return false;
+        }
+        return true;
     }
 
 	public static String returnDateCurrent(){

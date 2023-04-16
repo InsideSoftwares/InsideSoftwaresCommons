@@ -8,7 +8,7 @@ Projeto contem todas as classes, métodos e recursos comuns a todos os projetos 
 ## Framework Utilizado
 
 * [Spring Boot]('https://spring.io/projects/spring-boot')
-  * Versão: 2.7.4
+  * Versão: 3.0.5
 * [Java]('https://www.java.com/pt-BR/')
   * Versão: 17 ou superior
 
@@ -61,4 +61,34 @@ Esse projeto é usado pelas seguintes projetos:
             super(PACKAGE_CONTROLLER);
         }
     }
+  ```
+  * Para utilizar o cache deve adicionar as seguintes properties por serviço:
+  ```
+  spring
+    data:
+      redis:
+        repositories:
+          enabled: false
+        port: 26379
+        passowrd: '{cipher}5e954244f702180bb7165fdbf3d89aa7779da7ffa541934a2474dd6844d72065'
+        sentinel:
+          database: 0
+          master: mymaster
+          nodes: localhost
+          passowrd: '{cipher}5e954244f702180bb7165fdbf3d89aa7779da7ffa541934a2474dd6844d72065'
+  
+    caches:
+      type: redis
+      redis:
+        key-prefix: 'api::'
+        time-to-live: 3600
+  
+  insidesoftwares-cache:
+  
+  config:
+    timeToLiveSeconds: 2000
+
+  caches:
+    - name: INSIDE_ACCESS_USER
+      timeToLiveSeconds: 3600
   ```
