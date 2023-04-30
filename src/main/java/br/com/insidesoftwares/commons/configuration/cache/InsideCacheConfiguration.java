@@ -1,9 +1,9 @@
 package br.com.insidesoftwares.commons.configuration.cache;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -71,5 +71,10 @@ public class InsideCacheConfiguration {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofSeconds(cachesProperties.getTimeToLiveSeconds()))
                 .disableCachingNullValues();
+    }
+
+    @Bean("InsideCacheKeyGenerator")
+    public KeyGenerator keyGenerator() {
+        return new InsideCacheKeyGenerator();
     }
 }

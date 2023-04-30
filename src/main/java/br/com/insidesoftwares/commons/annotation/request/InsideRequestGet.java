@@ -31,4 +31,6 @@ public @interface InsideRequestGet {
     @AliasFor(annotation = Cacheable.class, attribute = "value")
     String[] nameCache() default "";
 
+    @AliasFor(annotation = Cacheable.class, attribute = "keyGenerator")
+    String keyGenerator() default "InsideCacheKeyGenerator";
 }

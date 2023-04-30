@@ -3,6 +3,7 @@ package br.com.insidesoftwares.commons.configuration.rest.filter;
 
 import br.com.insidesoftwares.commons.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -20,6 +21,9 @@ import java.io.IOException;
 @Order(0)
 public class LoggingInitialFilter implements Filter {
 
+	@Value("server.server.context-path")
+	private String contextPath;
+
 	@Override
 	public void doFilter(
 			ServletRequest request,
@@ -28,21 +32,23 @@ public class LoggingInitialFilter implements Filter {
 	) throws IOException, ServletException {
 
 		final HttpServletRequest req = (HttpServletRequest) request;
-		log.info("""
-				--------------------------------------------------------------
-				Request Time: {}
-				Request Method: {}
-				Request URI: {}
-				Content-Type: {}
-				Headers: {}
-				--------------------------------------------------------------""",
-				DateUtils.returnDateCurrent(),
-				req.getMethod(),
-				req.getRequestURI(),
-				req.getContentType(),
-				new ServletServerHttpRequest(req).getHeaders()
-		);
 
+		if(req.getRequestURI().contains(contextPath+"/api/v")) {
+			log.info("""
+							--------------------------------------------------------------
+							Request Time: {}
+							Request Method: {}
+							Request URI: {}
+							Content-Type: {}
+							Headers: {}
+							--------------------------------------------------------------""",
+					DateUtils.returnDateCurrent(),
+					req.getMethod(),
+					req.getRequestURI(),
+					req.getContentType(),
+					new ServletServerHttpRequest(req).getHeaders()
+			);
+		}
 		chain.doFilter(req, response);
 	}
 }
