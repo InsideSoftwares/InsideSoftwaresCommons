@@ -1,6 +1,7 @@
 package br.com.insidesoftwares.commons.configuration.cache;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -19,6 +20,10 @@ import java.util.Map;
 import java.util.Objects;
 
 @Configuration
+@ConditionalOnProperty(
+        prefix="spring.cache", name = "enable",
+        havingValue = "true",
+        matchIfMissing = true)
 @EnableCaching
 @RequiredArgsConstructor
 public class InsideCacheConfiguration {

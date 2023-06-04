@@ -23,7 +23,7 @@ import java.io.IOException;
 @Order(100)
 public class LoggingFinalFilter implements Filter {
 
-	@Value("server.server.context-path")
+	@Value("${server.servlet.context-path}")
 	private String contextPath;
 
 	@Override
@@ -38,7 +38,7 @@ public class LoggingFinalFilter implements Filter {
 		ContentCachingResponseWrapper servletResponse = new ContentCachingResponseWrapper(res);
 
 		chain.doFilter(request, servletResponse);
-		if(req.getRequestURI().contains(contextPath+"/api/v")) {
+		if(req.getRequestURI().contains(contextPath+"/api")) {
 			log.info("""
 							--------------------------------------------------------------
 							Response Time: {}

@@ -21,7 +21,7 @@ import java.io.IOException;
 @Order(0)
 public class LoggingInitialFilter implements Filter {
 
-	@Value("server.server.context-path")
+	@Value("${server.servlet.context-path}")
 	private String contextPath;
 
 	@Override
@@ -33,7 +33,7 @@ public class LoggingInitialFilter implements Filter {
 
 		final HttpServletRequest req = (HttpServletRequest) request;
 
-		if(req.getRequestURI().contains(contextPath+"/api/v")) {
+		if(req.getRequestURI().contains(contextPath+"/api")) {
 			log.info("""
 							--------------------------------------------------------------
 							Request Time: {}
