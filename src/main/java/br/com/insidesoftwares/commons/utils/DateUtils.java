@@ -72,6 +72,10 @@ public class DateUtils {
 		return LocalDateTime.now().format(FORMATER_TIME);
 	}
 
+    public static LocalDate getDateCurrent(){
+        return LocalDate.now();
+    }
+
     public static String returnDate(final LocalDate date){
         if(Objects.isNull(date)) return null;
         return date.format(FORMATER);

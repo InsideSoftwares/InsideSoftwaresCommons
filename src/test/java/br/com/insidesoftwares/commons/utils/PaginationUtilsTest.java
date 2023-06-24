@@ -18,20 +18,23 @@ class PaginationUtilsTest {
     private final static int TOTAL_PAGES = 10;
     private final static long TOTAL_ELEMENTS = 100;
     private final static int SIZE_PER_PAGE = 10;
+    private final static int TOTAL_ELEMENTS_PER_PAGE = 10;
 
     @Test
     void createPaginated() {
         PaginatedDTO paginatedDTOExpected = PaginatedDTO.builder()
                 .totalPages(TOTAL_PAGES)
                 .totalElements(TOTAL_ELEMENTS)
+                .totalElementsPerPage(TOTAL_ELEMENTS_PER_PAGE)
                 .sizePerPage(SIZE_PER_PAGE)
                 .build();
 
-        PaginatedDTO paginatedDTOResult = PaginationUtils.createPaginated(TOTAL_PAGES, TOTAL_ELEMENTS, SIZE_PER_PAGE);
+        PaginatedDTO paginatedDTOResult = PaginationUtils.createPaginated(TOTAL_PAGES, TOTAL_ELEMENTS, TOTAL_ELEMENTS_PER_PAGE, SIZE_PER_PAGE);
 
-        assertEquals(paginatedDTOExpected.getSizePerPage(), paginatedDTOResult.getSizePerPage());
-        assertEquals(paginatedDTOExpected.getTotalElements(), paginatedDTOResult.getTotalElements());
-        assertEquals(paginatedDTOExpected.getTotalPages(), paginatedDTOResult.getTotalPages());
+        assertEquals(paginatedDTOExpected.sizePerPage(), paginatedDTOResult.sizePerPage());
+        assertEquals(paginatedDTOExpected.totalElements(), paginatedDTOResult.totalElements());
+        assertEquals(paginatedDTOExpected.totalElementsPerPage(), paginatedDTOResult.totalElementsPerPage());
+        assertEquals(paginatedDTOExpected.totalPages(), paginatedDTOResult.totalPages());
     }
 
     @Test

@@ -13,10 +13,15 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PaginationUtils {
 
-    public static PaginatedDTO createPaginated(final int totalPages, final long totalElements, final int sizePerPage){
+    public static PaginatedDTO createPaginated(
+            final int totalPages,
+            final long totalElements,
+            final long totalElementsPerPage,
+            final int sizePerPage){
         return PaginatedDTO.builder()
                 .totalPages(totalPages)
                 .totalElements(totalElements)
+                .totalElementsPerPage(totalElementsPerPage)
                 .sizePerPage(sizePerPage)
                 .build();
     }
