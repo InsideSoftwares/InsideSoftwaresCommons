@@ -8,7 +8,7 @@ Projeto contem todas as classes, métodos e recursos comuns a todos os projetos 
 ## Framework Utilizado
 
 * [Spring Boot]('https://spring.io/projects/spring-boot')
-  * Versão: 2.7.4
+  * Versão: 3.1.1
 * [Java]('https://www.java.com/pt-BR/')
   * Versão: 17 ou superior
 
@@ -16,10 +16,7 @@ Projeto contem todas as classes, métodos e recursos comuns a todos os projetos 
 
 Esse projeto é usado pelas seguintes projetos:
 
-- [InsideSoftwaresSecurityCommons]('https://github.com/InsideSoftwares/InsideSoftwaresSecurityCommons') 
-- [InsideSoftwaresExceptionCommons]('https://github.com/InsideSoftwares/InsideSoftwaresExceptionCommons') 
-- [InsideSoftwaresAuthenticator]('https://github.com/InsideSoftwares/InsideSoftwaresAuthenticator') 
-- [InsideSoftwaresAccessControl]('https://github.com/InsideSoftwares/access_control_back')
+- [InsideSoftwaresSecurityCommons]('https://github.com/InsideSoftwares/InsideSoftwaresSecurityCommons')
 
 ## Build do projeto
 
@@ -32,7 +29,7 @@ Esse projeto é usado pelas seguintes projetos:
   ```
     <dependency>
         <groupId>br.com.insidesoftwares</groupId>
-        <artifactId>commons</artifactId>
+        <artifactId>utils</artifactId>
         <version>1.0-SNAPSHOT</version>
     </dependency>
   ```
@@ -60,5 +57,65 @@ Esse projeto é usado pelas seguintes projetos:
         public AuthenticationRestAdvice() {
             super(PACKAGE_CONTROLLER);
         }
+    }
+  ```
+  * Para utilizar o cache deve adicionar as seguintes properties por serviço:
+  ```
+  spring
+    data:
+      redis:
+        repositories:
+          enabled: false
+        port: 26379
+        passowrd: '{cipher}5e954244f702180bb7165fdbf3d89aa7779da7ffa541934a2474dd6844d72065'
+        sentinel:
+          database: 0
+          master: mymaster
+          nodes: localhost
+          passowrd: '{cipher}5e954244f702180bb7165fdbf3d89aa7779da7ffa541934a2474dd6844d72065'
+  
+    cache:
+      enable: false
+      type: redis
+      redis:
+        key-prefix: 'api::'
+        time-to-live: 12000000
+  
+insidesoftwares-cache:  
+  config:
+    timeToLiveSeconds: 2000
+    caches:
+      - name: INSIDE_ACCESS_USER
+        timeToLiveSeconds: 3600
+  ```
+
+# InsideSoftwaresExceptionCommons
+
+Projeto por manter as configurações, tratamento e padrões das Exception ocorrida nos projetos que importa.
+* Versão disponivel: 1.0-SNAPSHOT
+
+## Utilização em demais projetos
+
+* Importa no pom do projeto Spring:
+  ```
+    <dependency>
+        <groupId>br.com.insidesoftwares</groupId>
+        <artifactId>exception</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+  ```
+
+* Será necessário criar uma configuração(@Bean) no projeto para carregar as mensagens dos erros, como mostrado logo abaixo:
+  ```
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasenames(
+                "classpath:messages_exception"
+        );
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setCacheSeconds(10);
+        messageSource.setFallbackToSystemLocale(false);
+        return messageSource;
     }
   ```
