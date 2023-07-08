@@ -2,29 +2,30 @@ package br.com.insidesoftwares.commons.configuration.rest.filter;
 
 
 import br.com.insidesoftwares.commons.utils.DateUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.server.ServletServerHttpResponse;
-import org.springframework.web.util.ContentCachingResponseWrapper;
-
+import br.com.insidesoftwares.commons.utils.filter.FilterUtil;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.util.ContentCachingResponseWrapper;
+
 import java.io.IOException;
 
 @Slf4j
 @Configuration
 @Order(100)
+@RequiredArgsConstructor
 public class LoggingFinalFilter implements Filter {
 
-	@Value("${server.servlet.context-path}")
-	private String contextPath;
+	private final InsideFilterProperties insideFilterProperties;
+	private final FilterUtil filterUtil;
 
 	@Override
 	public void doFilter(
@@ -38,20 +39,29 @@ public class LoggingFinalFilter implements Filter {
 		ContentCachingResponseWrapper servletResponse = new ContentCachingResponseWrapper(res);
 
 		chain.doFilter(request, servletResponse);
-		if(req.getRequestURI().contains(contextPath+"/api")) {
+		if(req.getRequestURI().contains(insideFilterProperties.getURI())) {
+			String responseBody = getResponseBody(servletResponse);
 			log.info("""
 							--------------------------------------------------------------
 							Response Time: {}
 							Response-Code: {}
 							Content-Type: {}
-							Headers: {}
+							Response: {}
 							--------------------------------------------------------------""",
 					DateUtils.returnDateCurrent(),
 					servletResponse.getStatus(),
 					servletResponse.getContentType(),
-					new ServletServerHttpResponse(servletResponse).getHeaders()
+					responseBody
 			);
 		}
 		servletResponse.copyBodyToResponse();
+	}
+
+	private String getResponseBody(ContentCachingResponseWrapper servletResponse) {
+		String responseBody = "Body view not enabled";
+		if(insideFilterProperties.isShowResponseBody()) {
+			responseBody = filterUtil.formatBody(servletResponse.getContentInputStream());
+		}
+		return responseBody;
 	}
 }

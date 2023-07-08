@@ -101,6 +101,10 @@
             <groupId>com.trendyol</groupId>
             <artifactId>Jdempotent-spring-boot-redis-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

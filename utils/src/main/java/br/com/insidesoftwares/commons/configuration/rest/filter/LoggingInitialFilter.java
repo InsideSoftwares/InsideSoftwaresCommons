@@ -2,27 +2,30 @@ package br.com.insidesoftwares.commons.configuration.rest.filter;
 
 
 import br.com.insidesoftwares.commons.utils.DateUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.server.ServletServerHttpRequest;
-
+import br.com.insidesoftwares.commons.utils.filter.FilterUtil;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.server.ServletServerHttpRequest;
+
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Configuration
 @Order(0)
+@RequiredArgsConstructor
 public class LoggingInitialFilter implements Filter {
 
-	@Value("${server.servlet.context-path}")
-	private String contextPath;
+	private final InsideFilterProperties insideFilterProperties;
+	private final FilterUtil filterUtil;
 
 	@Override
 	public void doFilter(
@@ -31,9 +34,11 @@ public class LoggingInitialFilter implements Filter {
 			FilterChain chain
 	) throws IOException, ServletException {
 
-		final HttpServletRequest req = (HttpServletRequest) request;
+		final MultiReadHttpServletRequest req = new MultiReadHttpServletRequest((HttpServletRequest) request);
 
-		if(req.getRequestURI().contains(contextPath+"/api")) {
+		if(req.getRequestURI().contains(insideFilterProperties.getURI())) {
+			String headers = getRequestHeaders(req);
+			String body = getRequestBody(req);
 			log.info("""
 							--------------------------------------------------------------
 							Request Time: {}
@@ -41,14 +46,45 @@ public class LoggingInitialFilter implements Filter {
 							Request URI: {}
 							Content-Type: {}
 							Headers: {}
+							Request Body: {}
 							--------------------------------------------------------------""",
 					DateUtils.returnDateCurrent(),
 					req.getMethod(),
-					req.getRequestURI(),
+					createURI(req),
 					req.getContentType(),
-					new ServletServerHttpRequest(req).getHeaders()
+					headers,
+					body
 			);
 		}
+
 		chain.doFilter(req, response);
+	}
+
+	private String createURI(MultiReadHttpServletRequest servletRequest) {
+		String queryParams = servletRequest.getParameterMap().entrySet().stream()
+				.map(query -> "%s=%s".formatted(query.getKey(), String.join(",", query.getValue()))
+		).collect(Collectors.joining("&"));
+
+		if(!queryParams.isEmpty()){
+			queryParams = "?%s".formatted(queryParams);
+		}
+
+		return "%s%s".formatted(servletRequest.getRequestURI(), queryParams);
+	}
+
+	private String getRequestHeaders(MultiReadHttpServletRequest servletRequest) {
+		String resquestHeaders = "Headers view not enabled";
+		if(insideFilterProperties.isShowRequestHeaders()) {
+			resquestHeaders = filterUtil.formatHeadersView(new ServletServerHttpRequest(servletRequest).getHeaders());
+		}
+		return resquestHeaders;
+	}
+
+	private String getRequestBody(MultiReadHttpServletRequest servletRequest) throws IOException {
+		String responseBody = "Body view not enabled";
+		if(insideFilterProperties.isShowRequestBody()) {
+			responseBody = filterUtil.formatBody(servletRequest.getInputStream());
+		}
+		return responseBody;
 	}
 }

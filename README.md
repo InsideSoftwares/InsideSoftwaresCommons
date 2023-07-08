@@ -81,12 +81,20 @@ Esse projeto é usado pelas seguintes projetos:
         key-prefix: 'api::'
         time-to-live: 12000000
   
-insidesoftwares-cache:  
-  config:
-    timeToLiveSeconds: 2000
-    caches:
-      - name: INSIDE_ACCESS_USER
-        timeToLiveSeconds: 3600
+  insidesoftwares-cache:  
+    config:
+      timeToLiveSeconds: 2000
+      caches:
+        - name: INSIDE_ACCESS_USER
+          timeToLiveSeconds: 3600
+  ```
+  * Para habilitar o exibição dos Header, Request Body e Response Body realizar configuração das seguintes properties
+  ```
+    insidesoftwares:
+      filter:
+        show-request-body: true
+        show-request-headers: true
+        show-response-body: true
   ```
 
 # InsideSoftwaresExceptionCommons
