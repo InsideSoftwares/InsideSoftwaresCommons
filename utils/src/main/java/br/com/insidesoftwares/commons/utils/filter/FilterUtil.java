@@ -80,7 +80,6 @@ public class FilterUtil {
                             );
                     return jsonObjectList;
                 }
-                return jsonElement;
             }
             return jsonElement;
         }
