@@ -9,6 +9,7 @@ import br.com.insidesoftwares.exception.error.InsideSoftwaresNoRollbackException
 import br.com.insidesoftwares.exception.model.AttributeNotValid;
 import br.com.insidesoftwares.exception.model.ExceptionResponse;
 import br.com.insidesoftwares.exception.utils.ExceptionUtils;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,8 +25,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import jakarta.validation.ConstraintViolationException;
 
 import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
@@ -123,7 +121,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 					validationErrorsDTO.add(
 							new AttributeNotValid(
 									attributes.get(0),
-									localeUtils.getMessage(e.getMessage(), attributes.toArray(String[]::new))
+									localeUtils.getMessage(e.getMessage(), attributes.toArray(Object[]::new))
 							)
 					);
 				}
@@ -180,7 +178,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 				.data(exceptionResponse)
 				.build();
 	}
-	private InsideSoftwaresResponse<ExceptionResponse> createResponse(String code, String... args){
+	private InsideSoftwaresResponse<ExceptionResponse> createResponse(String code, Object... args){
 		ExceptionResponse exceptionResponse = ExceptionResponse.builder()
 				.codeError(code)
 				.message(localeUtils.getMessage(code, args))

@@ -4,5 +4,5 @@ import java.util.Locale;
 
 public interface LocaleUtils {
     Locale getLocale();
-    String getMessage(String code, String... args);
+    String getMessage(String code, Object... args);
 }

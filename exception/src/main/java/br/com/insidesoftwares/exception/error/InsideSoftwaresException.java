@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class InsideSoftwaresException extends RuntimeException {
     private final String code;
-	private final String[] args;
+	private final Object[] args;
 
 	public InsideSoftwaresException(ExceptionCode code) {
 		super();
@@ -14,7 +14,7 @@ public class InsideSoftwaresException extends RuntimeException {
 		this.args = null;
 	}
 
-	public InsideSoftwaresException(ExceptionCode code, String... args) {
+	public InsideSoftwaresException(ExceptionCode code, Object... args) {
 		super();
 		this.code = code.getCode();
 		this.args = args;
