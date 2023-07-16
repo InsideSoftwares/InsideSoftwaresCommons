@@ -14,7 +14,7 @@ import java.util.List;
 public class ExceptionResponse implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5688741746859700020L;
 
     private final String message;
     private final String codeError;

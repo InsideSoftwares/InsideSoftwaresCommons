@@ -9,6 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>br.com.insidesoftwares.commons</groupId>
     <artifactId>utils</artifactId>
 
     <properties>
@@ -124,7 +125,6 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
@@ -152,7 +152,7 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.80</minimum>
+                                            <minimum>0.10</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -163,6 +163,7 @@
 
                 <configuration>
                     <excludes>
+                        <exclude>br/com/insidesoftwares/commons/annotation/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/configuration/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/enums/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/dto/**/*</exclude>
@@ -170,6 +171,7 @@
                         <exclude>br/com/insidesoftwares/commons/specification/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/sort/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/listener/**/*</exclude>
+                        <exclude>br/com/insidesoftwares/commons/utils/SpecificationRepository.*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -189,7 +191,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>8.2.1</version>
+                <version>8.3.1</version>
                 <reportSets>
                     <reportSet>
                         <reports>

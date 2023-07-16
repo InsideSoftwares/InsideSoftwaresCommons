@@ -11,7 +11,6 @@ import java.util.List;
 
 public class SpecificationRepository {
 
-
     public static <T> Specification<T> specificationBetween(final String field, final LocalDate startDate, final LocalDate endDate) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get(field), startDate, endDate);
     }
