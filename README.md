@@ -4,19 +4,20 @@
 
 Projeto contem todas as classes, métodos e recursos comuns a todos os projetos necessário para integração dos sistemas da Inside Softwares
 * Versão disponivel: 1.0-SNAPSHOT
+* [License](LICENSE.MD)
 
 ## Framework Utilizado
 
-* [Spring Boot]('https://spring.io/projects/spring-boot')
+* [Spring Boot](https://spring.io/projects/spring-boot)
   * Versão: 3.1.1
-* [Java]('https://www.java.com/pt-BR/')
+* [Java](https://www.java.com/pt-BR/)
   * Versão: 17 ou superior
 
 ## Usado pelos projetos
 
 Esse projeto é usado pelas seguintes projetos:
 
-- [InsideSoftwaresSecurityCommons]('https://github.com/InsideSoftwares/InsideSoftwaresSecurityCommons')
+- [InsideSoftwaresSecurityCommons](https://github.com/InsideSoftwares/InsideSoftwaresSecurityCommons)
 
 ## Build do projeto
 
@@ -26,7 +27,7 @@ Esse projeto é usado pelas seguintes projetos:
 ## Utilização em demais projetos
 
   * Importa no pom do projeto Spring: 
-  ```
+  ```xml
     <dependency>
         <groupId>br.com.insidesoftwares</groupId>
         <artifactId>utils</artifactId>
@@ -35,7 +36,7 @@ Esse projeto é usado pelas seguintes projetos:
   ```
 
   * Será necessário criar uma configuração(@Bean) no projeto para carregar as mensagens dos erros, como mostrado logo abaixo:
-  ```
+  ```java
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -49,7 +50,7 @@ Esse projeto é usado pelas seguintes projetos:
     }
   ```
   * Será necessário também criar uma classe de configuração para ativar os logs de cada chamada que o Rest receber:
-  ```
+  ```java
     @RestControllerAdvice
     public class AuthenticationRestAdvice extends InsideSoftwaresRestAdvice {
         private static final String PACKAGE_CONTROLLER = "br.com.insidesoftwares.authenticator.controller";
@@ -60,7 +61,7 @@ Esse projeto é usado pelas seguintes projetos:
     }
   ```
   * Para utilizar o cache deve adicionar as seguintes properties por serviço:
-  ```
+  ```yaml
   spring
     data:
       redis:
@@ -89,7 +90,7 @@ Esse projeto é usado pelas seguintes projetos:
           timeToLiveSeconds: 3600
   ```
   * Para habilitar o exibição dos Header, Request Body e Response Body realizar configuração das seguintes properties
-  ```
+  ```yaml
     insidesoftwares:
       filter:
         show-request-body: true
@@ -105,7 +106,7 @@ Projeto por manter as configurações, tratamento e padrões das Exception ocorr
 ## Utilização em demais projetos
 
 * Importa no pom do projeto Spring:
-  ```
+  ```xml
     <dependency>
         <groupId>br.com.insidesoftwares</groupId>
         <artifactId>exception</artifactId>
@@ -114,7 +115,7 @@ Projeto por manter as configurações, tratamento e padrões das Exception ocorr
   ```
 
 * Será necessário criar uma configuração(@Bean) no projeto para carregar as mensagens dos erros, como mostrado logo abaixo:
-  ```
+  ```java
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
