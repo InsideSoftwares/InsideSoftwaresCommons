@@ -12,8 +12,6 @@ public record PaginatedDTO(
         long totalElements,
         long totalElementsPerPage
 ) implements Serializable {
-
     @Serial
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 1538642283241571187L;
 }

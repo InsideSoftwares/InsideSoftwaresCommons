@@ -9,6 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>br.com.insidesoftwares.commons</groupId>
     <artifactId>exception</artifactId>
 
     <properties>
@@ -20,7 +21,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>br.com.insidesoftwares</groupId>
+            <groupId>br.com.insidesoftwares.commons</groupId>
             <artifactId>utils</artifactId>
         </dependency>
         <dependency>
@@ -64,7 +65,6 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
@@ -80,6 +80,13 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>br/com/insidesoftwares/exception/error/**/*</exclude>
+                        <exclude>br/com/insidesoftwares/exception/model/**/*</exclude>
+                        <exclude>br/com/insidesoftwares/exception/ExceptionsHandler.*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.owasp</groupId>
@@ -97,7 +104,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>8.2.1</version>
+                <version>8.3.1</version>
                 <reportSets>
                     <reportSet>
                         <reports>

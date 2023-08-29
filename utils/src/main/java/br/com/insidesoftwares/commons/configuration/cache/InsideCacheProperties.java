@@ -13,7 +13,7 @@ import java.util.List;
         havingValue = "true",
         matchIfMissing = true)
 @Component
-@ConfigurationProperties( prefix="insidesoftwares-cache")
+@ConfigurationProperties( prefix="insidesoftwares-cache.config")
 @Data
 public class InsideCacheProperties {
 
