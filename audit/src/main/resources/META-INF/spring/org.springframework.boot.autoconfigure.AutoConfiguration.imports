@@ -1,0 +1,4 @@
+br.com.insidesoftwares.audit.configuration.InsideAuditConfiguration
+br.com.insidesoftwares.audit.configuration.InsideLogDataSourceConfiguration
+br.com.insidesoftwares.audit.configuration.properties.InsideAuditLogProperties
+br.com.insidesoftwares.audit.aspect.InsideAuditAspectImplementation

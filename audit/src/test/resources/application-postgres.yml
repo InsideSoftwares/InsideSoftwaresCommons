@@ -1,0 +1,28 @@
+insidesoftwares:
+  audit:
+    system: INSIDE_AUDIT
+    enable: true
+
+spring:
+  datasource:
+    audit:
+      url: jdbc:postgresql://localhost:5432/test
+      username: test
+      password: test
+      hikari:
+        connection-timeout: 5000
+        idle-timeout: 150000
+        max-lifetime: 300000
+        minimum-idle: 10
+        maximum-pool-size: 50
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        enable_lazy_load_no_trans: true
+        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
