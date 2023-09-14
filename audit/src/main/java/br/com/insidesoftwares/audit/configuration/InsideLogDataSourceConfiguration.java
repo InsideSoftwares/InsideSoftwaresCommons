@@ -1,5 +1,6 @@
 package br.com.insidesoftwares.audit.configuration;
 
+import br.com.insidesoftwares.audit.configuration.properties.InsideAuditLogProperties;
 import jakarta.persistence.EntityManagerFactory;
 import liquibase.integration.spring.SpringLiquibase;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,8 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @RequiredArgsConstructor
 public class InsideLogDataSourceConfiguration {
+
+    private final InsideAuditLogProperties insideAuditLogProperties;
 
     @Bean(name="InsideAuditLogDataSourceProps")
     @ConfigurationProperties("spring.datasource.audit")
@@ -68,6 +71,8 @@ public class InsideLogDataSourceConfiguration {
         liquibase.setChangeLog("classpath:db/changelog/db_audit.changelog-master.yaml");
         liquibase.setDatabaseChangeLogLockTable("INS_DATABASECHANGELOGLOCK");
         liquibase.setDatabaseChangeLogTable("INS_DATABASECHANGELOG");
+        liquibase.setDatabaseChangeLogTable("INS_DATABASECHANGELOG");
+        liquibase.setShouldRun(insideAuditLogProperties.isEnable());
         return liquibase;
     }
 }

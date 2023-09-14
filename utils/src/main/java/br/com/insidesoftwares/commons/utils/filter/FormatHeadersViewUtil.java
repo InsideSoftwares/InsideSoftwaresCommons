@@ -1,0 +1,28 @@
+package br.com.insidesoftwares.commons.utils.filter;
+
+import br.com.insidesoftwares.commons.lgpd.DataMaskingService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
+
+@Component
+@Slf4j
+@RequiredArgsConstructor
+public class FormatHeadersViewUtil {
+
+    private final DataMaskingService dataMaskingService;
+
+    public String formatHeadersView(final HttpHeaders headers) {
+        StringBuilder headerFormatted = new StringBuilder();
+        headers.keySet().forEach(headerName -> {
+            String headerValue = dataMaskingService.applyDataMaskValueHeader(headerName, headers.get(headerName).get(0));
+            headerFormatted.append("""
+                    Header Name -> %s -- %s
+                    """.formatted(headerName, headerValue));
+        });
+
+        return headerFormatted.toString();
+    }
+
+}

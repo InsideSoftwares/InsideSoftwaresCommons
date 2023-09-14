@@ -22,6 +22,7 @@ public class GsonUtils {
         if(Objects.isNull(gson)) {
             gson = new GsonBuilder()
                     .setPrettyPrinting()
+                    .serializeNulls()
                     .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                     .registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())

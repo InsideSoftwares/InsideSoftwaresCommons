@@ -1,7 +1,7 @@
 package br.com.insidesoftwares.commons.configuration.rest;
 
 
-import br.com.insidesoftwares.commons.dto.response.InsideSoftwaresResponse;
+import br.com.insidesoftwares.commons.dto.response.InsideSoftwaresResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -16,7 +16,7 @@ import java.time.temporal.ChronoField;
 import java.util.Objects;
 
 @Log4j2
-public class InsideSoftwaresRestAdvice implements ResponseBodyAdvice<InsideSoftwaresResponse<Object>> {
+public class InsideSoftwaresRestAdvice implements ResponseBodyAdvice<InsideSoftwaresResponseDTO<Object>> {
 
 	private static final String START_TIME_HEADER = "StartTime";
 
@@ -27,9 +27,9 @@ public class InsideSoftwaresRestAdvice implements ResponseBodyAdvice<InsideSoftw
 	}
 
 	@Override
-	public InsideSoftwaresResponse<Object> beforeBodyWrite(InsideSoftwaresResponse<Object> body, MethodParameter returnType,
-														MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
-														ServerHttpRequest request, ServerHttpResponse response) {
+	public InsideSoftwaresResponseDTO<Object> beforeBodyWrite(InsideSoftwaresResponseDTO<Object> body, MethodParameter returnType,
+                                                              MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
+                                                              ServerHttpRequest request, ServerHttpResponse response) {
 
 		if(Objects.nonNull(body)) {
 			long startTime = getStartTime(response);

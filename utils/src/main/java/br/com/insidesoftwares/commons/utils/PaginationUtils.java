@@ -1,7 +1,7 @@
 package br.com.insidesoftwares.commons.utils;
 
-import br.com.insidesoftwares.commons.dto.request.PaginationFilter;
-import br.com.insidesoftwares.commons.dto.response.PaginatedDTO;
+import br.com.insidesoftwares.commons.dto.request.InsidePaginationFilterDTO;
+import br.com.insidesoftwares.commons.dto.response.InsidePaginatedDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -13,12 +13,12 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PaginationUtils {
 
-    public static PaginatedDTO createPaginated(
+    public static InsidePaginatedDTO createPaginated(
             final int totalPages,
             final long totalElements,
             final long totalElementsPerPage,
             final int sizePerPage){
-        return PaginatedDTO.builder()
+        return InsidePaginatedDTO.builder()
                 .totalPages(totalPages)
                 .totalElements(totalElements)
                 .totalElementsPerPage(totalElementsPerPage)
@@ -31,17 +31,17 @@ public class PaginationUtils {
     }
 
     public static Pageable createPageable(
-            final PaginationFilter paginationFilter
+            final InsidePaginationFilterDTO insidePaginationFilterDTO
     ) {
-        Sort sort = createSort(paginationFilter.getDirection(), paginationFilter.getOrder());
+        Sort sort = createSort(insidePaginationFilterDTO.getDirection(), insidePaginationFilterDTO.getOrder());
         return Objects.nonNull(sort) ?
                 PageRequest.of(
-                    calculatePage(paginationFilter.getPage()),
-                    paginationFilter.getSizePerPage(), sort
+                    calculatePage(insidePaginationFilterDTO.getPage()),
+                    insidePaginationFilterDTO.getSizePerPage(), sort
                 ) :
                 PageRequest.of(
-                        calculatePage(paginationFilter.getPage()),
-                        paginationFilter.getSizePerPage()
+                        calculatePage(insidePaginationFilterDTO.getPage()),
+                        insidePaginationFilterDTO.getSizePerPage()
                 );
     }
 
