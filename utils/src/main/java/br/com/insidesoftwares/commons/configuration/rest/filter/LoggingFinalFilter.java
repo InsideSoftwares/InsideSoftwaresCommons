@@ -1,8 +1,9 @@
 package br.com.insidesoftwares.commons.configuration.rest.filter;
 
 
+import br.com.insidesoftwares.commons.configuration.rest.filter.properties.InsideFilterProperties;
 import br.com.insidesoftwares.commons.utils.DateUtils;
-import br.com.insidesoftwares.commons.utils.filter.FilterUtil;
+import br.com.insidesoftwares.commons.lgpd.SanitizationBodyComponent;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,7 +26,7 @@ import java.io.IOException;
 public class LoggingFinalFilter implements Filter {
 
 	private final InsideFilterProperties insideFilterProperties;
-	private final FilterUtil filterUtil;
+	private final SanitizationBodyComponent sanitizationBodyComponent;
 
 	@Override
 	public void doFilter(
@@ -60,7 +61,7 @@ public class LoggingFinalFilter implements Filter {
 	private String getResponseBody(ContentCachingResponseWrapper servletResponse) {
 		String responseBody = "Body view not enabled";
 		if(insideFilterProperties.isShowResponseBody()) {
-			responseBody = filterUtil.formatBody(servletResponse.getContentInputStream());
+			responseBody = sanitizationBodyComponent.sanitizeBody(servletResponse.getContentInputStream());
 		}
 		return responseBody;
 	}

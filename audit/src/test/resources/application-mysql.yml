@@ -1,0 +1,27 @@
+insidesoftwares:
+  audit:
+    system: INSIDE_AUDIT
+    enable: true
+
+spring:
+  datasource:
+    audit:
+      url: jdbc:tc:mysql:8.0.34:///databasename
+      username: test
+      password: test
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        connection-timeout: 5000
+        idle-timeout: 150000
+        max-lifetime: 300000
+        minimum-idle: 10
+        maximum-pool-size: 50
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        ddl-auto: none
+        dialect: org.hibernate.dialect.MySQLDialect
+        naming:
+          physical-strategy: br.com.insidesoftwares.commons.configuration.mysql.MySQLUpperCaseStrategy

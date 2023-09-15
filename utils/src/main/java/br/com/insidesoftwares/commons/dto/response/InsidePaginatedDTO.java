@@ -6,7 +6,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Builder
-public record PaginatedDTO(
+public record InsidePaginatedDTO(
         int sizePerPage,
         int totalPages,
         long totalElements,

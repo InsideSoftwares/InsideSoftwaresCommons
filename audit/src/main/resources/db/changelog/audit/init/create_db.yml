@@ -1,0 +1,131 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_INS_LOG_AUDIT
+      author: System
+      changes:
+        - tagDatabase:
+            tag: INIT
+        - createTable:
+            tableName: INS_LOG_AUDIT
+            dbms: 'mysql, postgresql'
+            columns:
+              - column:
+                  name: ID_LOG
+                  autoIncrement: false
+                  type: ${UUIDType}
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: PK_INS_LOG_AUDIT
+                    nullable: false
+              - column:
+                  name: ORIGIN_SYSTEM
+                  autoIncrement: false
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: METHOD
+                  autoIncrement: false
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: DESCRIPTION
+                  autoIncrement: false
+                  type: VARCHAR(1000)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: LOGGED_USER
+                  autoIncrement: false
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: SUCCESS
+                  autoIncrement: false
+                  type: ${typeBoolean}
+                  constraints:
+                    nullable: false
+              - column:
+                  name: MESSAGE_ERROR
+                  autoIncrement: false
+                  type: LONGVARCHAR
+                  constraints:
+                    nullable: true
+              - column:
+                  name: START_DATE_CHANGE
+                  autoIncrement: false
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: END_DATE_CHANGE
+                  autoIncrement: false
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: PARAMETER
+                  autoIncrement: false
+                  type: LONGVARCHAR
+                  constraints:
+                    nullable: true
+              - column:
+                  name: RESPONSE
+                  autoIncrement: false
+                  type: LONGVARCHAR
+                  constraints:
+                    nullable: true
+        - createIndex:
+            clustered: true
+            indexName: IDX_ILA_ORIGIN_SYSTEM
+            tableName: INS_LOG_AUDIT
+            dbms: 'mysql, postgresql'
+            columns:
+              - column:
+                  name: ORIGIN_SYSTEM
+        - createIndex:
+            clustered: true
+            indexName: IDX_ILA_LOGGED_USER
+            tableName: INS_LOG_AUDIT
+            dbms: 'mysql, postgresql'
+            columns:
+              - column:
+                  name: LOGGED_USER
+        - createIndex:
+            clustered: true
+            indexName: IDX_ILA_START_DATE_CHANGE
+            tableName: INS_LOG_AUDIT
+            dbms: 'mysql, postgresql'
+            columns:
+              - column:
+                  name: START_DATE_CHANGE
+        - createIndex:
+            clustered: true
+            indexName: IDX_ILA_END_DATE_CHANGE
+            tableName: INS_LOG_AUDIT
+            dbms: 'mysql, postgresql'
+            columns:
+              - column:
+                  name: END_DATE_CHANGE
+        - createIndex:
+            clustered: true
+            indexName: IDX_ILA_SDC_ORS
+            tableName: INS_LOG_AUDIT
+            dbms: 'mysql, postgresql'
+            columns:
+              - column:
+                  name: START_DATE_CHANGE
+              - column:
+                  name: ORIGIN_SYSTEM
+        - createIndex:
+            clustered: true
+            indexName: IDX_ILA_EDC_ORS
+            tableName: INS_LOG_AUDIT
+            dbms: 'mysql, postgresql'
+            columns:
+              - column:
+                  name: END_DATE_CHANGE
+              - column:
+                  name: ORIGIN_SYSTEM

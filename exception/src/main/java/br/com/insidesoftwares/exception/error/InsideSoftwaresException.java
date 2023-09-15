@@ -2,8 +2,10 @@ package br.com.insidesoftwares.exception.error;
 
 import br.com.insidesoftwares.commons.specification.ExceptionCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class InsideSoftwaresException extends RuntimeException {
     private final String code;
 	private final Object[] args;

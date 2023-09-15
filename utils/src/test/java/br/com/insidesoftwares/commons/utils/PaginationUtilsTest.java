@@ -1,7 +1,7 @@
 package br.com.insidesoftwares.commons.utils;
 
-import br.com.insidesoftwares.commons.dto.request.PaginationFilter;
-import br.com.insidesoftwares.commons.dto.response.PaginatedDTO;
+import br.com.insidesoftwares.commons.dto.request.InsidePaginationFilterDTO;
+import br.com.insidesoftwares.commons.dto.response.InsidePaginatedDTO;
 import br.com.insidesoftwares.commons.sort.PropertiesOrder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,24 +22,24 @@ class PaginationUtilsTest {
 
     @Test
     void createPaginated() {
-        PaginatedDTO paginatedDTOExpected = PaginatedDTO.builder()
+        InsidePaginatedDTO insidePaginatedDTOExpected = InsidePaginatedDTO.builder()
                 .totalPages(TOTAL_PAGES)
                 .totalElements(TOTAL_ELEMENTS)
                 .totalElementsPerPage(TOTAL_ELEMENTS_PER_PAGE)
                 .sizePerPage(SIZE_PER_PAGE)
                 .build();
 
-        PaginatedDTO paginatedDTOResult = PaginationUtils.createPaginated(TOTAL_PAGES, TOTAL_ELEMENTS, TOTAL_ELEMENTS_PER_PAGE, SIZE_PER_PAGE);
+        InsidePaginatedDTO insidePaginatedDTOResult = PaginationUtils.createPaginated(TOTAL_PAGES, TOTAL_ELEMENTS, TOTAL_ELEMENTS_PER_PAGE, SIZE_PER_PAGE);
 
-        assertEquals(paginatedDTOExpected.sizePerPage(), paginatedDTOResult.sizePerPage());
-        assertEquals(paginatedDTOExpected.totalElements(), paginatedDTOResult.totalElements());
-        assertEquals(paginatedDTOExpected.totalElementsPerPage(), paginatedDTOResult.totalElementsPerPage());
-        assertEquals(paginatedDTOExpected.totalPages(), paginatedDTOResult.totalPages());
+        assertEquals(insidePaginatedDTOExpected.sizePerPage(), insidePaginatedDTOResult.sizePerPage());
+        assertEquals(insidePaginatedDTOExpected.totalElements(), insidePaginatedDTOResult.totalElements());
+        assertEquals(insidePaginatedDTOExpected.totalElementsPerPage(), insidePaginatedDTOResult.totalElementsPerPage());
+        assertEquals(insidePaginatedDTOExpected.totalPages(), insidePaginatedDTOResult.totalPages());
     }
 
     @Test
     void createPageable() {
-        PaginationFilter<OrderTest> paginationFilter = PaginationFilter.<OrderTest>builder()
+        InsidePaginationFilterDTO<OrderTest> insidePaginationFilterDTO = InsidePaginationFilterDTO.<OrderTest>builder()
                 .page(1)
                 .direction(Sort.Direction.DESC)
                 .sizePerPage(25)
@@ -47,10 +47,10 @@ class PaginationUtilsTest {
 
         Pageable pageableExpected = PageRequest.of(
                 0,
-                paginationFilter.getSizePerPage()
+                insidePaginationFilterDTO.getSizePerPage()
         );
 
-        Pageable pageableResult = PaginationUtils.createPageable(paginationFilter);
+        Pageable pageableResult = PaginationUtils.createPageable(insidePaginationFilterDTO);
 
         assertEquals(pageableExpected.getPageNumber(), pageableResult.getPageNumber());
         assertEquals(pageableExpected.getPageSize(), pageableResult.getPageSize());
@@ -67,7 +67,7 @@ class PaginationUtilsTest {
 
     @Test
     void createPageableWithSort() {
-        PaginationFilter<OrderTest> paginationFilter = PaginationFilter.<OrderTest>builder()
+        InsidePaginationFilterDTO<OrderTest> insidePaginationFilterDTO = InsidePaginationFilterDTO.<OrderTest>builder()
                 .page(1)
                 .direction(Sort.Direction.DESC)
                 .sizePerPage(25)
@@ -76,10 +76,10 @@ class PaginationUtilsTest {
 
         Pageable pageableExpected = PageRequest.of(
                 0,
-                paginationFilter.getSizePerPage()
+                insidePaginationFilterDTO.getSizePerPage()
         );
 
-        Pageable pageableResult = PaginationUtils.createPageable(paginationFilter);
+        Pageable pageableResult = PaginationUtils.createPageable(insidePaginationFilterDTO);
 
         assertEquals(pageableExpected.getPageNumber(), pageableResult.getPageNumber());
         assertEquals(pageableExpected.getPageSize(), pageableResult.getPageSize());

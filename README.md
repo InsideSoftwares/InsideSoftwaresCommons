@@ -29,7 +29,7 @@ Esse projeto é usado pelas seguintes projetos:
   * Importa no pom do projeto Spring: 
   ```xml
     <dependency>
-        <groupId>br.com.insidesoftwares</groupId>
+        <groupId>br.com.insidesoftwares.commons</groupId>
         <artifactId>utils</artifactId>
         <version>1.0-SNAPSHOT</version>
     </dependency>
@@ -108,7 +108,7 @@ Projeto por manter as configurações, tratamento e padrões das Exception ocorr
 * Importa no pom do projeto Spring:
   ```xml
     <dependency>
-        <groupId>br.com.insidesoftwares</groupId>
+        <groupId>br.com.insidesoftwares.commons</groupId>
         <artifactId>exception</artifactId>
         <version>1.0-SNAPSHOT</version>
     </dependency>
@@ -127,4 +127,53 @@ Projeto por manter as configurações, tratamento e padrões das Exception ocorr
         messageSource.setFallbackToSystemLocale(false);
         return messageSource;
     }
+  ```
+
+# InsideSoftwaresAudit
+
+Projeto por realizar o salvamento de log de execução dos metodos, podendo salvar no mesmo banco de dados da aplicação ou
+banco de dados exclusivo para o log.
+
+* Versão disponivel: 1.0-SNAPSHOT
+
+## Bancos suportados
+
+* Mysql: 8.0.34 ou superior
+* Postgres: 15.4 ou superior
+
+## Utilização em demais projetos
+
+* Importa no pom do projeto Spring:
+  ```xml
+    <dependency>
+        <groupId>br.com.insidesoftwares.commons</groupId>
+        <artifactId>audit</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+  ```
+* Para utilizar o log deve adicionar a seguinte properties :
+  ```yaml
+  insidesoftwares:
+    audit:
+      system: SYSTEM_NAME
+      enable: true
+  
+  spring:
+    datasource:
+      audit:
+        url: jdbc:databasename
+        username: username
+        password: password
+        driver-class-name: driver_database
+        hikari:
+          connection-timeout: 5000
+          idle-timeout: 150000
+          max-lifetime: 300000
+          minimum-idle: 10
+          maximum-pool-size: 50
+  ```
+  Para desativar o log basta informar o `enable` como `false` 
+* E anotar os metodos para começar a realizar salvamento de logs:
+```java
+    @InsideAudit(method = "Nome do metodo (Opcional)", description = "Descrição do Metodo (Opcional)")
   ```

@@ -12,13 +12,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class InsideSoftwaresResponse<T> implements Serializable {
+public class InsideSoftwaresResponseDTO<T> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 4302753512896834219L;
 
     private String duration;
     private T data;
-    private PaginatedDTO paginatedDTO;
+    private InsidePaginatedDTO insidePaginatedDTO;
 
 }

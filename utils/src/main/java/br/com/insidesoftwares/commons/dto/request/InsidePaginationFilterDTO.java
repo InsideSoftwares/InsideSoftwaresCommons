@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Builder
-public record PaginationFilter<T>(
+public record InsidePaginationFilterDTO<T>(
         Integer page,
         Integer sizePerPage,
         Sort.Direction direction,

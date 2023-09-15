@@ -1,8 +1,10 @@
 package br.com.insidesoftwares.commons.configuration.rest.filter;
 
 
+import br.com.insidesoftwares.commons.configuration.rest.filter.properties.InsideFilterProperties;
 import br.com.insidesoftwares.commons.utils.DateUtils;
-import br.com.insidesoftwares.commons.utils.filter.FilterUtil;
+import br.com.insidesoftwares.commons.lgpd.SanitizationBodyComponent;
+import br.com.insidesoftwares.commons.lgpd.SanitizationHeadersComponent;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,7 +27,8 @@ import java.util.stream.Collectors;
 public class LoggingInitialFilter implements Filter {
 
 	private final InsideFilterProperties insideFilterProperties;
-	private final FilterUtil filterUtil;
+	private final SanitizationHeadersComponent sanitizationHeadersComponent;
+	private final SanitizationBodyComponent sanitizationBodyComponent;
 
 	@Override
 	public void doFilter(
@@ -75,7 +78,7 @@ public class LoggingInitialFilter implements Filter {
 	private String getRequestHeaders(MultiReadHttpServletRequest servletRequest) {
 		String resquestHeaders = "Headers view not enabled";
 		if(insideFilterProperties.isShowRequestHeaders()) {
-			resquestHeaders = filterUtil.formatHeadersView(new ServletServerHttpRequest(servletRequest).getHeaders());
+			resquestHeaders = sanitizationHeadersComponent.sanitizeHeader(new ServletServerHttpRequest(servletRequest).getHeaders());
 		}
 		return resquestHeaders;
 	}
@@ -83,7 +86,7 @@ public class LoggingInitialFilter implements Filter {
 	private String getRequestBody(MultiReadHttpServletRequest servletRequest) throws IOException {
 		String responseBody = "Body view not enabled";
 		if(insideFilterProperties.isShowRequestBody()) {
-			responseBody = filterUtil.formatBody(servletRequest.getInputStream());
+			responseBody = sanitizationBodyComponent.sanitizeBody(servletRequest.getInputStream());
 		}
 		return responseBody;
 	}

@@ -1,11 +1,13 @@
-package br.com.insidesoftwares.commons.configuration.rest.filter;
+package br.com.insidesoftwares.commons.configuration.rest.filter.properties;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Data
+@RefreshScope
 public class InsideFilterProperties {
 
     @Value("${server.servlet.context-path}")

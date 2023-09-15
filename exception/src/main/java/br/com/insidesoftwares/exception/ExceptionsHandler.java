@@ -1,8 +1,8 @@
 package br.com.insidesoftwares.exception;
 
-import br.com.insidesoftwares.commons.dto.response.InsideSoftwaresResponse;
+import br.com.insidesoftwares.commons.dto.response.InsideSoftwaresResponseDTO;
 import br.com.insidesoftwares.commons.enums.InsideSoftwaresExceptionCode;
-import br.com.insidesoftwares.commons.specification.LocaleUtils;
+import br.com.insidesoftwares.commons.specification.LocaleService;
 import br.com.insidesoftwares.exception.error.InsideSoftwaresException;
 import br.com.insidesoftwares.exception.error.InsideSoftwaresNoContentException;
 import br.com.insidesoftwares.exception.error.InsideSoftwaresNoRollbackException;
@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 
-	private final LocaleUtils localeUtils;
+	private final LocaleService localeService;
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(
@@ -63,7 +63,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 			typesEnum = matcher.group();
 		}
 
-		String message = localeUtils.getMessage(InsideSoftwaresExceptionCode.ATTRIBUTE_NOT_VALID.getCode(), field, typesEnum);
+		String message = localeService.getMessage(InsideSoftwaresExceptionCode.ATTRIBUTE_NOT_VALID.getCode(), field, typesEnum);
 
 		return ResponseEntity.status(status).body(
 				createResponse(InsideSoftwaresExceptionCode.ENUM_ERROR.getCode(), message)
@@ -86,12 +86,12 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 						e -> validationErrorsDTO.add(
 								new AttributeNotValid(
 										e.getField(),
-										localeUtils.getMessage(e.getDefaultMessage(), e.getField())
+										localeService.getMessage(e.getDefaultMessage(), e.getField())
 								)
 						)
 				);
 
-		String message = localeUtils.getMessage(
+		String message = localeService.getMessage(
 				InsideSoftwaresExceptionCode.ATTRIBUTE_NOT_VALID.getCode(),
 				((ServletWebRequest)request).getRequest().getRequestURI()
 		);
@@ -104,7 +104,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ConstraintViolationException.class)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	protected InsideSoftwaresResponse<ExceptionResponse> handleConstraintViolationException(ConstraintViolationException exception) {
+	protected InsideSoftwaresResponseDTO<ExceptionResponse> handleConstraintViolationException(ConstraintViolationException exception) {
 		log.error("handleSecurity - ConstraintViolationException: ", exception);
 
 		List<AttributeNotValid> validationErrorsDTO = new ArrayList<>();
@@ -121,13 +121,13 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 					validationErrorsDTO.add(
 							new AttributeNotValid(
 									attributes.get(0),
-									localeUtils.getMessage(e.getMessage(), attributes.toArray(Object[]::new))
+									localeService.getMessage(e.getMessage(), attributes.toArray(Object[]::new))
 							)
 					);
 				}
 		);
 
-		String message = localeUtils.getMessage(InsideSoftwaresExceptionCode.ATTRIBUTE_NOT_VALID.getCode());
+		String message = localeService.getMessage(InsideSoftwaresExceptionCode.ATTRIBUTE_NOT_VALID.getCode());
 
 		return createResponse(InsideSoftwaresExceptionCode.ATTRIBUTE_NOT_VALID.getCode(), message, validationErrorsDTO);
 	}
@@ -135,7 +135,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(InsideSoftwaresException.class)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	protected InsideSoftwaresResponse<ExceptionResponse> handleInsideSoftwaresException(InsideSoftwaresException exception){
+	protected InsideSoftwaresResponseDTO<ExceptionResponse> handleInsideSoftwaresException(InsideSoftwaresException exception){
 		log.error("handleSecurity - InsideSoftwaresException: ", exception);
 		return createResponse(exception.getCode(), exception.getArgs());
 	}
@@ -143,7 +143,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(InsideSoftwaresNoRollbackException.class)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	protected InsideSoftwaresResponse<ExceptionResponse> handleInsideSoftwaresNoRollbackException(InsideSoftwaresNoRollbackException exception){
+	protected InsideSoftwaresResponseDTO<ExceptionResponse> handleInsideSoftwaresNoRollbackException(InsideSoftwaresNoRollbackException exception){
 		log.error("handleSecurity - InsideSoftwaresNoRollbackException: ", exception);
 		return createResponse(exception.getCode());
 	}
@@ -160,13 +160,13 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado: " + ex.getMessage());
 	}
 
-	private InsideSoftwaresResponse<ExceptionResponse> createResponse(
+	private InsideSoftwaresResponseDTO<ExceptionResponse> createResponse(
 			String code,
 			String message
 	){
 		return createResponse(code, message, null);
 	}
-	private InsideSoftwaresResponse<ExceptionResponse> createResponse(
+	private InsideSoftwaresResponseDTO<ExceptionResponse> createResponse(
 			String code,
 			String message,
 			List<AttributeNotValid> validationErrorsDTO
@@ -174,16 +174,16 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 		ExceptionResponse exceptionResponse = ExceptionResponse.builder().codeError(code)
 				.message(message)
 				.validationErrors(validationErrorsDTO).build();
-		return InsideSoftwaresResponse.<ExceptionResponse>builder()
+		return InsideSoftwaresResponseDTO.<ExceptionResponse>builder()
 				.data(exceptionResponse)
 				.build();
 	}
-	private InsideSoftwaresResponse<ExceptionResponse> createResponse(String code, Object... args){
+	private InsideSoftwaresResponseDTO<ExceptionResponse> createResponse(String code, Object... args){
 		ExceptionResponse exceptionResponse = ExceptionResponse.builder()
 				.codeError(code)
-				.message(localeUtils.getMessage(code, args))
+				.message(localeService.getMessage(code, args))
 				.build();
-		return InsideSoftwaresResponse.<ExceptionResponse>builder()
+		return InsideSoftwaresResponseDTO.<ExceptionResponse>builder()
 				.data(exceptionResponse)
 				.build();
 	}

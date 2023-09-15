@@ -16,6 +16,7 @@ class DateUtilsTest {
 
     private final static LocalDate DATE_WEENKEND_SATURDAY = LocalDate.of(2022,8,27);
     private final static LocalDate DATE_WEENKEND_SUNDAY = LocalDate.of(2022,8,28);
+    private final static LocalDateTime DATE_WEENKEND_SUNDAY_TIME = LocalDateTime.of(2022,8,28, 18, 59, 25);
     private final static LocalDate DATE_NOT_WEENKEND = LocalDate.of(2022,8,26);
     private final static LocalDateTime DATE_NOW = LocalDateTime.of(2022,8,26, 15, 25, 55);
 
@@ -114,4 +115,33 @@ class DateUtilsTest {
         assertEquals(dateExpected, dateResult);
     }
 
+    @Test
+    void returnCurrentDate() {
+        LocalDate dateExpected = LocalDate.now();
+        LocalDate dateResult = DateUtils.getDateCurrent();
+
+        assertEquals(dateExpected, dateResult);
+    }
+
+    @Test
+    void returnDateTime() {
+        String dateExpected = "2022-08-28 18:59:25.000";
+        String dateResult = DateUtils.returnDate(DATE_WEENKEND_SUNDAY_TIME);
+
+        assertEquals(dateExpected, dateResult);
+    }
+
+    @Test
+    void returnIsValidDate() {
+        boolean isValid = DateUtils.isDateValid(29,2,2024);
+
+        assertTrue(isValid);
+    }
+
+    @Test
+    void returnIsNotValidDate() {
+        boolean isValid = DateUtils.isDateValid(29,2,2023);
+
+        assertFalse(isValid);
+    }
 }
