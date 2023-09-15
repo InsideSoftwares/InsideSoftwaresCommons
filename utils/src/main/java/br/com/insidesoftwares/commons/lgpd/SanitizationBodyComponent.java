@@ -1,6 +1,5 @@
-package br.com.insidesoftwares.commons.utils.filter;
+package br.com.insidesoftwares.commons.lgpd;
 
-import br.com.insidesoftwares.commons.lgpd.DataMaskingService;
 import br.com.insidesoftwares.commons.utils.GsonUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SanitizationBodyUtil {
+public class SanitizationBodyComponent {
 
     private final DataMaskingService dataMaskingService;
     private static final String BODY_IS_EMPTY = "Does not have Body";

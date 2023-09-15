@@ -1,6 +1,5 @@
-package br.com.insidesoftwares.commons.utils.filter;
+package br.com.insidesoftwares.commons.lgpd;
 
-import br.com.insidesoftwares.commons.lgpd.DataMaskingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SanitizationHeadersUtil {
+public class SanitizationHeadersComponent {
 
     private final DataMaskingService dataMaskingService;
 

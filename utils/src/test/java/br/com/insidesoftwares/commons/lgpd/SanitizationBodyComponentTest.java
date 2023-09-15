@@ -1,7 +1,6 @@
-package br.com.insidesoftwares.commons.utils.filter;
+package br.com.insidesoftwares.commons.lgpd;
 
 import br.com.insidesoftwares.commons.dto.response.InsideSoftwaresResponseDTO;
-import br.com.insidesoftwares.commons.lgpd.DataMaskingService;
 import br.com.insidesoftwares.commons.utils.GsonUtils;
 import br.com.insidesoftwares.commons.utils.dto.TestDTO;
 import com.google.gson.Gson;
@@ -23,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
-class SanitizationBodyUtilTest {
+class SanitizationBodyComponentTest {
 
     @Mock
     private DataMaskingService dataMaskingService;
 
     @InjectMocks
-    private SanitizationBodyUtil sanitizationBodyUtil;
+    private SanitizationBodyComponent sanitizationBodyComponent;
 
     private final Gson gson = GsonUtils.getInstance();
     private static final String TAX_IDENTIFIER = "111.222.333-44";
@@ -39,14 +38,14 @@ class SanitizationBodyUtilTest {
     void shouldReturnTheSameBodyWhenEnteringStringThatIsNotJson() {
         String body = "Test.body";
 
-        String bodyResponse = sanitizationBodyUtil.sanitizeBody(body);
+        String bodyResponse = sanitizationBodyComponent.sanitizeBody(body);
 
         assertEquals(body, bodyResponse);
     }
 
     @Test
     void shouldReturnMessageOfNotHavingBodyWhenEnteringEmptyString() {
-        String bodyResponse = sanitizationBodyUtil.sanitizeBody(StringUtil.EMPTY_STRING);
+        String bodyResponse = sanitizationBodyComponent.sanitizeBody(StringUtil.EMPTY_STRING);
 
         assertEquals(BODY_IS_EMPTY, bodyResponse);
     }
@@ -61,7 +60,7 @@ class SanitizationBodyUtilTest {
         Mockito.when(dataMaskingService.applyDataMaskValueBody("enable", gson.toJsonTree(false))).thenReturn(gson.toJsonTree(false));
         Mockito.when(dataMaskingService.applyDataMaskValueBody("age", gson.toJsonTree(0))).thenReturn(gson.toJsonTree(0));
 
-        String bodyResponse = sanitizationBodyUtil.sanitizeBody(body);
+        String bodyResponse = sanitizationBodyComponent.sanitizeBody(body);
 
         assertEquals(body, bodyResponse);
     }
@@ -78,7 +77,7 @@ class SanitizationBodyUtilTest {
         Mockito.when(dataMaskingService.applyDataMaskValueBody("enable", gson.toJsonTree(false))).thenReturn(gson.toJsonTree(false));
         Mockito.when(dataMaskingService.applyDataMaskValueBody("age", gson.toJsonTree(0))).thenReturn(gson.toJsonTree(0));
 
-        String bodyResponse = sanitizationBodyUtil.sanitizeBody(body);
+        String bodyResponse = sanitizationBodyComponent.sanitizeBody(body);
 
         assertEquals(bodyExpected, bodyResponse);
     }
@@ -105,7 +104,7 @@ class SanitizationBodyUtilTest {
         Mockito.when(dataMaskingService.applyDataMaskValueBody("enable", gson.toJsonTree(false))).thenReturn(gson.toJsonTree(false));
         Mockito.when(dataMaskingService.applyDataMaskValueBody("age", gson.toJsonTree(0))).thenReturn(gson.toJsonTree(0));
 
-        String bodyResponse = sanitizationBodyUtil.sanitizeBody(body);
+        String bodyResponse = sanitizationBodyComponent.sanitizeBody(body);
 
         assertEquals(bodyExpected, bodyResponse);
     }
@@ -134,7 +133,7 @@ class SanitizationBodyUtilTest {
         Mockito.when(dataMaskingService.applyDataMaskValueBody("enable", gson.toJsonTree(false))).thenReturn(gson.toJsonTree(false));
         Mockito.when(dataMaskingService.applyDataMaskValueBody("age", gson.toJsonTree(0))).thenReturn(gson.toJsonTree(0));
 
-        String bodyResponse = sanitizationBodyUtil.sanitizeBody(bodyInputStream);
+        String bodyResponse = sanitizationBodyComponent.sanitizeBody(bodyInputStream);
 
         assertEquals(bodyExpected, bodyResponse);
     }

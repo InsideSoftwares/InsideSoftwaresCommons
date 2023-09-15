@@ -28,7 +28,7 @@ class DataMaskingServiceTest {
     private static final String VALUE_MASKED = "*********";
 
     @Test
-    void deveAplicarMascaraNoValorComSucessoUtilizandoMetodoApplyDataMaskValueHeader() {
+    void shouldApplyMaskNoValueSuccessfullyUsingMetodoApplyDataMaskValueHeader() {
         String value = "VALOR_MASCARA";
         DataMask dataMask = createDataMask(KEY, VALUE_MASKED, false, null);
 
@@ -40,7 +40,7 @@ class DataMaskingServiceTest {
     }
 
     @Test
-    void naoDeveAplicarAMascaraQuandoNaoTiverConfiguradoDataMaskUtilizandoMetodoApplyDataMaskValueHeader() {
+    void shouldntApplyTheMaskWhenYouHaveNotConfiguredDataMaskUsingApplyDataMaskValueHeaderMethod() {
         String value = "VALOR_MASCARA";
 
         when(dataMaskingValues.headersValue()).thenReturn(Set.of());
@@ -51,7 +51,7 @@ class DataMaskingServiceTest {
     }
 
     @Test
-    void naoDeveAplicarAMascaraQuandoNaoLocalizarAConfiguracaoDataMaskUtilizandoMetodoApplyDataMaskValueHeader() {
+    void shouldntApplyTheMaskWhenNotFindTheConfigurationDataMaskUsingMetodoApplyDataMaskValueHeader() {
         String value = "VALOR_MASCARA";
         DataMask dataMask = createDataMask(KEY, VALUE_MASKED, false, null);
 
@@ -63,7 +63,7 @@ class DataMaskingServiceTest {
     }
 
     @Test
-    void deveAplicarMascaraNoValorComSucessoUtilizandoMetodoApplyDataMaskValueBody() {
+    void shouldApplyMaskNoValueSuccessfullyUsingMetodoApplyDataMaskValueBody() {
         String value = "VALOR_MASCARA";
         DataMask dataMask = createDataMask(KEY, VALUE_MASKED, false, null);
 
@@ -75,7 +75,7 @@ class DataMaskingServiceTest {
     }
 
     @Test
-    void naoDeveAplicarAMascaraQuandoNaoTiverConfiguradoDataMaskUtilizandoMetodoApplyDataMaskValueBody() {
+    void shouldntApplyTheMaskWhenYouHaveNotConfiguredDataMaskUsingApplyDataMaskValueBodyMethod() {
         String value = "VALOR_MASCARA";
 
         when(dataMaskingValues.bodyValue()).thenReturn(Set.of());
@@ -86,7 +86,7 @@ class DataMaskingServiceTest {
     }
 
     @Test
-    void naoDeveAplicarAMascaraQuandoNaoLocalizarAConfiguracaoDataMaskUtilizandoMetodoApplyDataMaskValueBody() {
+    void shouldntApplyTheMaskWhenNotFindTheConfigurationDataMaskUsingMetodoApplyDataMaskValueBody() {
         String value = "VALOR_MASCARA";
         DataMask dataMask = createDataMask(KEY, VALUE_MASKED, false, null);
 
@@ -99,7 +99,7 @@ class DataMaskingServiceTest {
 
 
     @Test
-    void deveAplicarMascaraComRegexNoValorComSucessoUtilizandoMetodoApplyDataMaskValueHeader() {
+    void shouldApplyMaskWithRegexNoValorWithSuccessUsingMetodoApplyDataMaskValueHeader() {
         String value = "VALOR_MASCARA";
         String newValue = "*";
         String valueExpected = "V*L***M*SC***";
@@ -113,7 +113,7 @@ class DataMaskingServiceTest {
     }
 
     @Test
-    void deveAplicarMascaraComRegexNoValorComSucessoUtilizandoMetodoApplyDataMaskValueBody() {
+    void shouldApplyMaskWithRegexNoValorWithSuccessUsingMetodoApplyDataMaskValueBody() {
         String value = "VALOR_MASCARA";
         String newValue = "*";
         String valueExpected = "V*L***M*SC***";
@@ -127,7 +127,7 @@ class DataMaskingServiceTest {
     }
 
     @Test
-    void deveAplicarMascaraComRegexNoValorComSucessoUtilizandoMetodoApplyDataMaskValueBodyByJsonElement() {
+    void shouldApplyMaskWithRegexNoValorWithSucessUsingMetodoApplyDataMaskValueBodyByJsonElement() {
         String value = "VALOR_MASCARA";
         String newValue = "*";
         String valueExpected = "V*L***M*SC***";
