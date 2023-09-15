@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class FormatHeadersViewUtil {
+public class SanitizationHeadersUtil {
 
     private final DataMaskingService dataMaskingService;
 
-    public String formatHeadersView(final HttpHeaders headers) {
+    public String sanitizeHeader(final HttpHeaders headers) {
         StringBuilder headerFormatted = new StringBuilder();
         headers.keySet().forEach(headerName -> {
             String headerValue = dataMaskingService.applyDataMaskValueHeader(headerName, headers.get(headerName).get(0));

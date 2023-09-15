@@ -1,4 +1,4 @@
-package br.com.insidesoftwares.audit.annotation;
+package br.com.insidesoftwares.commons.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

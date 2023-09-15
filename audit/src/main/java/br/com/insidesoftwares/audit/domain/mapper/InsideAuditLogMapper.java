@@ -3,7 +3,7 @@ package br.com.insidesoftwares.audit.domain.mapper;
 import br.com.insidesoftwares.audit.domain.dto.InsideAuditLogDTO;
 import br.com.insidesoftwares.audit.domain.entity.InsideAuditLog;
 import br.com.insidesoftwares.commons.utils.GsonUtils;
-import br.com.insidesoftwares.commons.utils.filter.FormatBodyUtil;
+import br.com.insidesoftwares.commons.utils.filter.SanitizationBodyUtil;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -17,7 +17,7 @@ import java.util.Objects;
 public abstract class InsideAuditLogMapper {
 
     @Autowired
-    private FormatBodyUtil formatBodyUtil;
+    private SanitizationBodyUtil sanitizationBodyUtil;
 
     @Mappings({
             @Mapping(source = "insideAuditLogDTO.parameter", target = "parameter", qualifiedByName = "toConvertToJson"),
@@ -33,6 +33,6 @@ public abstract class InsideAuditLogMapper {
         }
         String json = GsonUtils.getInstance().toJson(value);
 
-        return formatBodyUtil.formatBody(json);
+        return sanitizationBodyUtil.sanitizeBody(json);
     }
 }

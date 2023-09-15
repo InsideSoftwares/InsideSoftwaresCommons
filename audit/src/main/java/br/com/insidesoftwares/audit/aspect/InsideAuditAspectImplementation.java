@@ -1,6 +1,6 @@
 package br.com.insidesoftwares.audit.aspect;
 
-import br.com.insidesoftwares.audit.annotation.InsideAudit;
+import br.com.insidesoftwares.commons.annotation.InsideAudit;
 import br.com.insidesoftwares.audit.domain.dto.InsideAuditLogDTO;
 import br.com.insidesoftwares.audit.service.InsideAuditService;
 import br.com.insidesoftwares.commons.specification.InsideSoftwaresUserAuthentication;

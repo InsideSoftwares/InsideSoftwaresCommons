@@ -185,6 +185,7 @@
                         <exclude>br/com/insidesoftwares/commons/sort/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/listener/**/*</exclude>
                         <exclude>br/com/insidesoftwares/commons/utils/SpecificationRepository.*</exclude>
+                        <exclude>br/com/insidesoftwares/commons/utils/InsideSoftwaresResponseUtils.*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

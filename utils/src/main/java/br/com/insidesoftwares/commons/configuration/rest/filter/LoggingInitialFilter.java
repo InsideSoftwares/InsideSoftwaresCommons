@@ -3,8 +3,8 @@ package br.com.insidesoftwares.commons.configuration.rest.filter;
 
 import br.com.insidesoftwares.commons.configuration.rest.filter.properties.InsideFilterProperties;
 import br.com.insidesoftwares.commons.utils.DateUtils;
-import br.com.insidesoftwares.commons.utils.filter.FormatBodyUtil;
-import br.com.insidesoftwares.commons.utils.filter.FormatHeadersViewUtil;
+import br.com.insidesoftwares.commons.utils.filter.SanitizationBodyUtil;
+import br.com.insidesoftwares.commons.utils.filter.SanitizationHeadersUtil;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 public class LoggingInitialFilter implements Filter {
 
 	private final InsideFilterProperties insideFilterProperties;
-	private final FormatHeadersViewUtil formatHeadersViewUtil;
-	private final FormatBodyUtil formatBodyUtil;
+	private final SanitizationHeadersUtil sanitizationHeadersUtil;
+	private final SanitizationBodyUtil sanitizationBodyUtil;
 
 	@Override
 	public void doFilter(
@@ -78,7 +78,7 @@ public class LoggingInitialFilter implements Filter {
 	private String getRequestHeaders(MultiReadHttpServletRequest servletRequest) {
 		String resquestHeaders = "Headers view not enabled";
 		if(insideFilterProperties.isShowRequestHeaders()) {
-			resquestHeaders = formatHeadersViewUtil.formatHeadersView(new ServletServerHttpRequest(servletRequest).getHeaders());
+			resquestHeaders = sanitizationHeadersUtil.sanitizeHeader(new ServletServerHttpRequest(servletRequest).getHeaders());
 		}
 		return resquestHeaders;
 	}
@@ -86,7 +86,7 @@ public class LoggingInitialFilter implements Filter {
 	private String getRequestBody(MultiReadHttpServletRequest servletRequest) throws IOException {
 		String responseBody = "Body view not enabled";
 		if(insideFilterProperties.isShowRequestBody()) {
-			responseBody = formatBodyUtil.formatBody(servletRequest.getInputStream());
+			responseBody = sanitizationBodyUtil.sanitizeBody(servletRequest.getInputStream());
 		}
 		return responseBody;
 	}

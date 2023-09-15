@@ -20,22 +20,24 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class FormatBodyUtil {
+public class SanitizationBodyUtil {
 
     private final DataMaskingService dataMaskingService;
     private static final String BODY_IS_EMPTY = "Does not have Body";
     private final Gson gson = GsonUtils.getInstance();
 
-    public String formatBody(final InputStream bodyInputStream){
+    public String sanitizeBody(final InputStream bodyInputStream){
+        log.info("Starting sanitize body");
         String bodyValue = new BufferedReader(
                 new InputStreamReader(bodyInputStream, StandardCharsets.UTF_8))
                 .lines()
                 .collect(Collectors.joining("\n"));
 
-        return formatBody(bodyValue);
+        return sanitizeBody(bodyValue);
     }
 
-    public String formatBody(final String bodyValue){
+    public String sanitizeBody(final String bodyValue){
+        log.info("Starting sanitize body");
         if(!bodyValue.isEmpty()) {
             try {
                 JsonObject bodyJson = gson.fromJson(bodyValue, JsonObject.class);

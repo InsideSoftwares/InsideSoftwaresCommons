@@ -21,47 +21,49 @@ public class DataMaskingService {
     private static final Gson gson = GsonUtils.getInstance();
 
     public String applyDataMaskValueHeader(final String key, final String value) {
+        log.info("Applying a mask to the Header Value");
         if(Objects.isNull(dataMaskingValues) || Objects.isNull(value)) return value;
 
         Optional<DataMask> dataMaskOptional = dataMaskingValues.headersValue().stream().filter(mask -> mask.key().equalsIgnoreCase(key)).findFirst();
-        if(dataMaskOptional.isEmpty()) {
-            return value;
-        }
-        DataMask dataMask = dataMaskOptional.get();
-        String newValue;
-        if(dataMask.isRegex()) {
-            newValue = value.replaceAll(dataMask.regex(), dataMask.newValue());
-        } else {
-            newValue = dataMask.newValue();
-        }
 
-        return newValue;
-    }
-
-    public String applyDataMaskValueBody(final String key, final String value) {
-        if(Objects.isNull(dataMaskingValues) || Objects.isNull(value)) return value;
-
-        Optional<DataMask> dataMaskOptional = dataMaskingValues.bodyValue().stream().filter(mask -> mask.key().equalsIgnoreCase(key)).findFirst();
-        if(dataMaskOptional.isEmpty()) {
-            return value;
-        }
-        DataMask dataMask = dataMaskOptional.get();
-        String newValue;
-        if(dataMask.isRegex()) {
-            newValue = value.replaceAll(dataMask.regex(), dataMask.newValue());
-        } else {
-            newValue = dataMask.newValue();
-        }
-
-        return newValue;
+        return applyDataMaskValue(dataMaskOptional, value);
     }
 
     public JsonElement applyDataMaskValueBody(final String key, final JsonElement value) {
+        log.info("Applying mask to Body Value");
         if(Objects.isNull(value)) return null;
 
         String valueMaks = applyDataMaskValueBody(key, value.getAsString());
 
         return gson.toJsonTree(valueMaks);
+    }
+
+    public String applyDataMaskValueBody(final String key, final String value) {
+        log.info("Applying mask to Body Value");
+        if(Objects.isNull(dataMaskingValues) || Objects.isNull(value)) return value;
+
+        Optional<DataMask> dataMaskOptional = dataMaskingValues.bodyValue().stream().filter(mask -> mask.key().equalsIgnoreCase(key)).findFirst();
+
+        return applyDataMaskValue(dataMaskOptional, value);
+    }
+
+
+
+    private String applyDataMaskValue(Optional<DataMask> dataMaskOptional, final String value) {
+        log.info("Applying mask");
+        if(dataMaskOptional.isEmpty()) {
+            return value;
+        }
+        DataMask dataMask = dataMaskOptional.get();
+        String newValue;
+        if(dataMask.isRegex()) {
+            newValue = value.replaceAll(dataMask.regex(), dataMask.newValue());
+        } else {
+            newValue = dataMask.newValue();
+        }
+
+        log.info("Mask applied in value");
+        return newValue;
     }
 
 }

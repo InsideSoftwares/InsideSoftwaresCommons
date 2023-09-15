@@ -1,6 +1,6 @@
 package br.com.insidesoftwares.audit.service;
 
-import br.com.insidesoftwares.audit.annotation.InsideAudit;
+import br.com.insidesoftwares.commons.annotation.InsideAudit;
 import br.com.insidesoftwares.audit.enums.ErrorCode;
 import br.com.insidesoftwares.exception.error.InsideSoftwaresException;
 import lombok.extern.slf4j.Slf4j;

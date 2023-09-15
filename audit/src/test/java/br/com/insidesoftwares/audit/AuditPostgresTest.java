@@ -5,7 +5,7 @@ import br.com.insidesoftwares.audit.service.InsideAuditExampleService;
 import br.com.insidesoftwares.audit.service.InsideSoftwaresUserAuthenticationBean;
 import br.com.insidesoftwares.audit.service.LocaleUtilsBean;
 import br.com.insidesoftwares.commons.lgpd.DataMaskingService;
-import br.com.insidesoftwares.commons.utils.filter.FormatBodyUtil;
+import br.com.insidesoftwares.commons.utils.filter.SanitizationBodyUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -20,7 +20,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
         InsideAuditAspectImplementation.class,
         InsideSoftwaresUserAuthenticationBean.class,
         LocaleUtilsBean.class,
-        FormatBodyUtil.class,
+        SanitizationBodyUtil.class,
         DataMaskingService.class
 })
 @Testcontainers
