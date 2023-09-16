@@ -21,7 +21,7 @@ public class DataMaskingService {
     private static final Gson gson = GsonUtils.getInstance();
 
     public String applyDataMaskValueHeader(final String key, final String value) {
-        log.info("Applying a mask to the Header Value");
+        log.debug("Applying a mask to the Header Value");
         if(Objects.isNull(dataMaskingValues) || Objects.isNull(value)) return value;
 
         Optional<DataMask> dataMaskOptional = dataMaskingValues.headersValue().stream().filter(mask -> mask.key().equalsIgnoreCase(key)).findFirst();
@@ -30,16 +30,16 @@ public class DataMaskingService {
     }
 
     public JsonElement applyDataMaskValueBody(final String key, final JsonElement value) {
-        log.info("Applying mask to Body Value");
+        log.debug("Applying mask to Body Value");
         if(Objects.isNull(value)) return null;
 
-        String valueMaks = applyDataMaskValueBody(key, value.getAsString());
+        String valueMaks = applyDataMaskValueBody(key, value.toString());
 
         return gson.toJsonTree(valueMaks);
     }
 
     public String applyDataMaskValueBody(final String key, final String value) {
-        log.info("Applying mask to Body Value");
+        log.debug("Applying mask to Body Value");
         if(Objects.isNull(dataMaskingValues) || Objects.isNull(value)) return value;
 
         Optional<DataMask> dataMaskOptional = dataMaskingValues.bodyValue().stream().filter(mask -> mask.key().equalsIgnoreCase(key)).findFirst();
@@ -50,7 +50,7 @@ public class DataMaskingService {
 
 
     private String applyDataMaskValue(Optional<DataMask> dataMaskOptional, final String value) {
-        log.info("Applying mask");
+        log.debug("Applying mask");
         if(dataMaskOptional.isEmpty()) {
             return value;
         }
@@ -62,7 +62,7 @@ public class DataMaskingService {
             newValue = dataMask.newValue();
         }
 
-        log.info("Mask applied in value");
+        log.debug("Mask applied in value");
         return newValue;
     }
 

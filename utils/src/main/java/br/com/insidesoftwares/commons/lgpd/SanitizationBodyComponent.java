@@ -13,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,7 +25,7 @@ public class SanitizationBodyComponent {
     private final Gson gson = GsonUtils.getInstance();
 
     public String sanitizeBody(final InputStream bodyInputStream){
-        log.info("Starting sanitize body");
+        log.debug("Starting sanitize body");
         String bodyValue = new BufferedReader(
                 new InputStreamReader(bodyInputStream, StandardCharsets.UTF_8))
                 .lines()
@@ -36,20 +35,26 @@ public class SanitizationBodyComponent {
     }
 
     public String sanitizeBody(final String bodyValue){
-        log.info("Starting sanitize body");
+        log.debug("Starting sanitize body");
         if(!bodyValue.isEmpty()) {
             try {
-                JsonObject bodyJson = gson.fromJson(bodyValue, JsonObject.class);
-                if (Objects.nonNull(bodyJson)) {
-                    bodyJson.keySet()
-                            .forEach(key -> {
-                                        JsonElement jsonElementResponse = getValueResponse(bodyJson.get(key));
-                                        bodyJson.add(key, jsonElementResponse);
-                                    }
-                            );
-
-                    return gson.toJson(bodyJson);
+                JsonElement json = gson.fromJson(bodyValue, JsonElement.class);
+                if(json.isJsonObject() && json instanceof JsonObject bodyJson) {
+                    return processBody(bodyJson);
                 }
+                if(json.isJsonArray() && json instanceof JsonArray arrayJson) {
+                    JsonArray objects = new JsonArray();
+                    arrayJson.forEach(jsonElement -> {
+                        if(jsonElement.isJsonObject() || jsonElement.isJsonArray()) {
+                            String jsonSanitized = sanitizeBody(jsonElement.toString());
+                            objects.add(gson.fromJson(jsonSanitized, jsonElement.getClass()));
+                        } else {
+                            objects.add(jsonElement);
+                        }
+                    });
+                    return gson.toJson(objects);
+                }
+                return bodyValue;
             } catch (Exception exception) {
                 log.error("Erro format Body", exception);
                 return bodyValue;
@@ -58,31 +63,25 @@ public class SanitizationBodyComponent {
         return BODY_IS_EMPTY;
     }
 
-    private JsonElement getValueResponse(final JsonElement jsonElement) {
-        if(jsonElement instanceof JsonObject jsonObject) {
-            jsonObject.keySet()
-                    .forEach( key -> {
-                            JsonElement jsonElementResponse = getValueResponse(jsonObject.get(key));
-                            jsonObject.add(key, dataMaskingService.applyDataMaskValueBody(key, jsonElementResponse));
-                        }
-                    );
-            return jsonObject;
-        } else {
-            if(jsonElement instanceof JsonArray jsonArray && !jsonArray.asList().isEmpty()) {
-                if(jsonArray.asList().get(0) instanceof JsonObject jsonObjectList){
-                    jsonObjectList.keySet()
-                            .forEach( key -> {
-                                    JsonElement jsonElementResponse = getValueResponse(jsonObjectList.get(key));
-                                    jsonObjectList.add(key, dataMaskingService.applyDataMaskValueBody(key, jsonElementResponse));
-                                }
-                            );
-                    return jsonObjectList;
+    private String processBody(JsonObject jsonObject) {
+        if(jsonObject.isJsonArray()) {
+            return sanitizeBody(jsonObject.getAsJsonArray().toString());
+        }
+
+        jsonObject.keySet().forEach( key -> {
+                JsonElement jsonElementResponse = jsonObject.get(key);
+                if(jsonElementResponse.isJsonPrimitive() || jsonElementResponse.isJsonNull()) {
+                    jsonObject.add(key, dataMaskingService.applyDataMaskValueBody(key, jsonElementResponse));
+                } else {
+                    if(jsonElementResponse.isJsonObject() || jsonElementResponse.isJsonArray()) {
+                        String jsonResponse = sanitizeBody(jsonElementResponse.toString());
+                        jsonObject.add(key, gson.fromJson(jsonResponse, jsonElementResponse.getClass()));
+                    }
                 }
             }
-            return jsonElement;
-        }
+        );
+
+        return gson.toJson(jsonObject);
     }
-
-
 
 }

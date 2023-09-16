@@ -90,16 +90,6 @@ class SanitizationBodyComponentTest {
         String bodyExpected = gson.toJson(createInsideSoftwaresResponse(testDTOExpected));
 
         Mockito.when(dataMaskingService.applyDataMaskValueBody(any(), any(JsonElement.class))).thenReturn(gson.toJsonTree(null));
-        Mockito.when(
-                    dataMaskingService.applyDataMaskValueBody(
-                            "testDTOs",
-                            gson.toJsonTree(createTestDTO("*******", false))
-                    )
-                ).thenReturn(
-                        gson.toJsonTree(
-                                Set.of(createTestDTO("*******", false))
-                        )
-                );
         Mockito.when(dataMaskingService.applyDataMaskValueBody("taxIdentifier", gson.toJsonTree(TAX_IDENTIFIER))).thenReturn(gson.toJsonTree("*******"));
         Mockito.when(dataMaskingService.applyDataMaskValueBody("enable", gson.toJsonTree(false))).thenReturn(gson.toJsonTree(false));
         Mockito.when(dataMaskingService.applyDataMaskValueBody("age", gson.toJsonTree(0))).thenReturn(gson.toJsonTree(0));
@@ -119,16 +109,6 @@ class SanitizationBodyComponentTest {
         String bodyExpected = gson.toJson(createInsideSoftwaresResponse(testDTOExpected));
 
         Mockito.when(dataMaskingService.applyDataMaskValueBody(any(), any(JsonElement.class))).thenReturn(gson.toJsonTree(null));
-        Mockito.when(
-                dataMaskingService.applyDataMaskValueBody(
-                        "testDTOs",
-                        gson.toJsonTree(createTestDTO("*******", false))
-                )
-        ).thenReturn(
-                gson.toJsonTree(
-                        Set.of(createTestDTO("*******", false))
-                )
-        );
         Mockito.when(dataMaskingService.applyDataMaskValueBody("taxIdentifier", gson.toJsonTree(TAX_IDENTIFIER))).thenReturn(gson.toJsonTree("*******"));
         Mockito.when(dataMaskingService.applyDataMaskValueBody("enable", gson.toJsonTree(false))).thenReturn(gson.toJsonTree(false));
         Mockito.when(dataMaskingService.applyDataMaskValueBody("age", gson.toJsonTree(0))).thenReturn(gson.toJsonTree(0));

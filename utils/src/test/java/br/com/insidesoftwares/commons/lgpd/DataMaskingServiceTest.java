@@ -130,7 +130,7 @@ class DataMaskingServiceTest {
     void shouldApplyMaskWithRegexNoValorWithSucessUsingMetodoApplyDataMaskValueBodyByJsonElement() {
         String value = "VALOR_MASCARA";
         String newValue = "*";
-        String valueExpected = "V*L***M*SC***";
+        String valueExpected = "\"V*L***M*SC***\"";
         DataMask dataMask = createDataMask(KEY, newValue, true, "([AOR_])");
 
         when(dataMaskingValues.bodyValue()).thenReturn(Set.of(dataMask));
