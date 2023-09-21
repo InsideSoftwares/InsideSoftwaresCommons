@@ -1,6 +1,4 @@
-
 # InsideSoftwaresCommons
-
 
 Projeto contem todas as classes, métodos e recursos comuns a todos os projetos necessário para integração dos sistemas da Inside Softwares
 * Versão disponivel: 1.0-SNAPSHOT
@@ -9,9 +7,9 @@ Projeto contem todas as classes, métodos e recursos comuns a todos os projetos 
 ## Framework Utilizado
 
 * [Spring Boot](https://spring.io/projects/spring-boot)
-  * Versão: 3.1.1
+  * Versão: 3.1.4
 * [Java](https://www.java.com/pt-BR/)
-  * Versão: 17 ou superior
+  * Versão: 21 ou superior
 
 ## Usado pelos projetos
 

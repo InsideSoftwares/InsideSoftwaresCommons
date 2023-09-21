@@ -39,7 +39,7 @@ class PaginationUtilsTest {
 
     @Test
     void createPageable() {
-        InsidePaginationFilterDTO<OrderTest> insidePaginationFilterDTO = InsidePaginationFilterDTO.<OrderTest>builder()
+        InsidePaginationFilterDTO insidePaginationFilterDTO = InsidePaginationFilterDTO.builder()
                 .page(1)
                 .direction(Sort.Direction.DESC)
                 .sizePerPage(25)
@@ -50,7 +50,7 @@ class PaginationUtilsTest {
                 insidePaginationFilterDTO.getSizePerPage()
         );
 
-        Pageable pageableResult = PaginationUtils.createPageable(insidePaginationFilterDTO);
+        Pageable pageableResult = PaginationUtils.createPageable(insidePaginationFilterDTO, OrderTest.ID);
 
         assertEquals(pageableExpected.getPageNumber(), pageableResult.getPageNumber());
         assertEquals(pageableExpected.getPageSize(), pageableResult.getPageSize());
@@ -67,11 +67,11 @@ class PaginationUtilsTest {
 
     @Test
     void createPageableWithSort() {
-        InsidePaginationFilterDTO<OrderTest> insidePaginationFilterDTO = InsidePaginationFilterDTO.<OrderTest>builder()
+        InsidePaginationFilterDTO insidePaginationFilterDTO = InsidePaginationFilterDTO.builder()
                 .page(1)
                 .direction(Sort.Direction.DESC)
                 .sizePerPage(25)
-                .order(OrderTest.ID)
+                .order(OrderTest.ID.name())
                 .build();
 
         Pageable pageableExpected = PageRequest.of(
@@ -79,7 +79,7 @@ class PaginationUtilsTest {
                 insidePaginationFilterDTO.getSizePerPage()
         );
 
-        Pageable pageableResult = PaginationUtils.createPageable(insidePaginationFilterDTO);
+        Pageable pageableResult = PaginationUtils.createPageable(insidePaginationFilterDTO, OrderTest.ID);
 
         assertEquals(pageableExpected.getPageNumber(), pageableResult.getPageNumber());
         assertEquals(pageableExpected.getPageSize(), pageableResult.getPageSize());
@@ -102,6 +102,15 @@ class PaginationUtilsTest {
         @Override
         public String properties() {
             return this.order;
+        }
+
+        @Override
+        public String value(String name) {
+            try{
+                return OrderTest.valueOf(name).getOrder();
+            }catch (Exception exception) {
+                return this.getOrder();
+            }
         }
     }
 

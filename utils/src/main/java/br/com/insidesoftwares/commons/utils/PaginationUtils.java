@@ -2,6 +2,7 @@ package br.com.insidesoftwares.commons.utils;
 
 import br.com.insidesoftwares.commons.dto.request.InsidePaginationFilterDTO;
 import br.com.insidesoftwares.commons.dto.response.InsidePaginatedDTO;
+import br.com.insidesoftwares.commons.sort.PropertiesOrder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -30,10 +31,12 @@ public class PaginationUtils {
         return page - 1;
     }
 
-    public static Pageable createPageable(
-            final InsidePaginationFilterDTO insidePaginationFilterDTO
+    public static <T> Pageable createPageable(
+            final InsidePaginationFilterDTO insidePaginationFilterDTO,
+            final PropertiesOrder orderDefault
     ) {
-        Sort sort = createSort(insidePaginationFilterDTO.getDirection(), insidePaginationFilterDTO.getOrder());
+        String order = orderDefault.value(insidePaginationFilterDTO.order());
+        Sort sort = createSort(insidePaginationFilterDTO.getDirection(), order);
         return Objects.nonNull(sort) ?
                 PageRequest.of(
                     calculatePage(insidePaginationFilterDTO.getPage()),
