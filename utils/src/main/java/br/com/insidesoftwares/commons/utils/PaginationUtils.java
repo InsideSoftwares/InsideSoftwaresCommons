@@ -31,7 +31,7 @@ public class PaginationUtils {
         return page - 1;
     }
 
-    public static <T> Pageable createPageable(
+    public static Pageable createPageable(
             final InsidePaginationFilterDTO insidePaginationFilterDTO,
             final PropertiesOrder orderDefault
     ) {

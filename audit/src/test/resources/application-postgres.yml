@@ -2,6 +2,8 @@ insidesoftwares:
   audit:
     system: INSIDE_AUDIT
     enable: true
+    liquibase:
+      enable: true
 
 spring:
   datasource:

@@ -13,4 +13,7 @@ public class InsideAuditLogProperties {
 
     @Value("${insidesoftwares.audit.enable:false}")
     private boolean enable;
+
+    @Value("${insidesoftwares.audit.liquibase.enable:true}")
+    private boolean enableLiquibase;
 }

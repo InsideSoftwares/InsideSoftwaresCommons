@@ -3,6 +3,7 @@ package br.com.insidesoftwares.exception.utils;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,4 @@ public class ExceptionUtils {
         }
         return values;
     }
-
-
-
 }

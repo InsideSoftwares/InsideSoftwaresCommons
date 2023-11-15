@@ -72,7 +72,7 @@ public class InsideLogDataSourceConfiguration {
         liquibase.setDatabaseChangeLogLockTable("INS_DATABASECHANGELOGLOCK");
         liquibase.setDatabaseChangeLogTable("INS_DATABASECHANGELOG");
         liquibase.setDatabaseChangeLogTable("INS_DATABASECHANGELOG");
-        liquibase.setShouldRun(insideAuditLogProperties.isEnable());
+        liquibase.setShouldRun(insideAuditLogProperties.isEnableLiquibase());
         return liquibase;
     }
 }

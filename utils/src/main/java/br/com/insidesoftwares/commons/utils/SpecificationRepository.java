@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class SpecificationRepository {
 
@@ -32,8 +33,13 @@ public class SpecificationRepository {
             final SpecificationFunction function,
             final C value
     ) {
-        return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(criteriaBuilder.function(function.getFunction(), value.getClass(), root.get(field)), value);
+        return (root, query, criteriaBuilder) -> {
+            if(Objects.isNull(function.getParam())) {
+                return criteriaBuilder.equal(criteriaBuilder.function(function.getFunction(), value.getClass(), root.get(field)), value);
+            } else {
+                return criteriaBuilder.equal(criteriaBuilder.function(function.getFunction(), value.getClass(), criteriaBuilder.literal(function.getParam()), root.get(field)), value);
+            }
+        };
     }
 
     public static <Y, T, O> Specification<T> specificationEqual(final O value, final String... fields) {
@@ -45,10 +51,9 @@ public class SpecificationRepository {
 
     private static <Y, T> Path<Y> getField(Root<T> root, List<String> fields) {
         Path<Y> path = root.get(fields.get(0));
-        fields.remove(0);
 
-        for(String field : fields) {
-            path = getFieldPath(path, field);
+        for(int index = 1; index < fields.size(); index++) {
+            path = getFieldPath(path, fields.get(index));
         }
 
         return path;
