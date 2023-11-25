@@ -67,18 +67,8 @@
             <artifactId>spring-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.lettuce</groupId>
-            <artifactId>lettuce-core</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jetbrains.kotlin</groupId>
-                    <artifactId>kotlin-stdlib</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.trendyol</groupId>
-            <artifactId>Jdempotent-spring-boot-redis-starter</artifactId>
+            <groupId>br.com.insidesoftwares.jdempotent</groupId>
+            <artifactId>redis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -95,6 +85,10 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
         </dependency>
 
         <dependency>
@@ -212,7 +206,6 @@
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
-                        <version>8.3.1</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -220,6 +213,17 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <configuration>
+                            <configLocation>${project.parent.basedir}/etc/devops/checkstyle/checkstyle.xml</configLocation>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -229,7 +233,6 @@
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
-                        <version>8.3.1</version>
                         <reportSets>
                             <reportSet>
                                 <reports>

@@ -185,7 +185,6 @@
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
-                        <version>8.3.1</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -193,6 +192,17 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <configuration>
+                            <configLocation>${project.parent.basedir}/etc/devops/checkstyle/checkstyle.xml</configLocation>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -202,7 +212,6 @@
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
-                        <version>8.3.1</version>
                         <reportSets>
                             <reportSet>
                                 <reports>

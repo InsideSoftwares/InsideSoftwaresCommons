@@ -6,6 +6,9 @@ insidesoftwares:
       enable: true
 
 spring:
+  cloud:
+    compatibility-verifier:
+      enabled: false
   datasource:
     audit:
       url: jdbc:tc:mysql:8.0.34:///databasename

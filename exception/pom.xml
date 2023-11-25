@@ -16,7 +16,6 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
     </properties>
 
     <dependencies>
@@ -100,7 +99,7 @@
                                                 <limit>
                                                     <counter>INSTRUCTION</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>0.10</minimum>
+                                                    <minimum>0.80</minimum>
                                                 </limit>
                                             </limits>
                                         </rule>
@@ -108,13 +107,6 @@
                                 </configuration>
                             </execution>
                         </executions>
-                        <configuration>
-                            <excludes>
-                                <exclude>br/com/insidesoftwares/exception/error/**/*</exclude>
-                                <exclude>br/com/insidesoftwares/exception/model/**/*</exclude>
-                                <exclude>br/com/insidesoftwares/exception/ExceptionsHandler.*</exclude>
-                            </excludes>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -123,7 +115,6 @@
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
-                        <version>8.3.1</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -131,6 +122,17 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <configuration>
+                            <configLocation>${project.parent.basedir}/etc/devops/checkstyle/checkstyle.xml</configLocation>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -140,7 +142,6 @@
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
-                        <version>8.3.1</version>
                         <reportSets>
                             <reportSet>
                                 <reports>
